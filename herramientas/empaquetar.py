@@ -20,7 +20,9 @@ def comando(args, cwd=RAIZ):
                                env={**os.environ, 'PYTHONUTF8': '1'})
     if resultado.returncode:
         raise RuntimeError(resultado.stdout + resultado.stderr)
-    return resultado.stdout + resultado.stderr
+    # Git emite advertencias de configuración ajenas al estado en stderr.
+    # No deben confundirse con nombres de archivos ni hashes.
+    return resultado.stdout if args[0] == 'git' else resultado.stdout + resultado.stderr
 
 
 def main():
