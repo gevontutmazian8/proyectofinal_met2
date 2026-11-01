@@ -1,6 +1,7 @@
 """Prototipo didáctico creado para el TPI; datos exclusivamente sintéticos."""
 import sqlite3
 from repositorio import RepositorioSQLite
+from dominio import NuevaSolicitud
 
 
 def validar_texto(valor, mensaje):
@@ -54,6 +55,12 @@ class Sistema:
         return r.lastrowid
 
     def _solicitud(self, datos):
+        nueva = NuevaSolicitud(**{campo: datos.get(campo) for campo in
+            ("estudiante_id", "tipo", "prioridad", "asunto", "descripcion", "responsable_id")})
+        return self.guardar_solicitud(nueva)
+
+    def guardar_solicitud(self, nueva: NuevaSolicitud):
+        datos = nueva.como_dict()
         if not self.repositorio.ejecutar('SELECT id FROM estudiantes WHERE id=?', (datos.get('estudiante_id'),)).fetchone():
             raise ValueError('Estudiante inexistente')
         if datos.get('tipo') not in ('certificado', 'equivalencia', 'inscripcion'):
