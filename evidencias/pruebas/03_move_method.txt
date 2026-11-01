@@ -1,0 +1,34 @@
+test_asignar_responsable (test_contrato.Contrato) ... ok
+test_cancelacion_terminal (test_contrato.Contrato) ... ok
+test_ciclo_de_estados (test_contrato.Contrato) ... ok
+test_email_duplicado (test_contrato.Contrato) ... ok
+test_entrada_sql_se_trata_como_texto (test_contrato.Contrato) ... ok
+test_estudiante_invalido_01 (test_contrato.Contrato) ... ok
+test_estudiante_invalido_02 (test_contrato.Contrato) ... ok
+test_estudiante_valido (test_contrato.Contrato) ... ok
+test_filtro_invalido_01 (test_contrato.Contrato) ... ok
+test_filtro_invalido_02 (test_contrato.Contrato) ... ok
+test_filtros_y_busqueda (test_contrato.Contrato) ... ok
+test_operacion_desconocida (test_contrato.Contrato) ... ok
+test_persistencia (test_contrato.Contrato) ... ok
+test_reporte (test_contrato.Contrato) ... ok
+test_responsable_al_crear (test_contrato.Contrato) ... ok
+test_responsable_inexistente (test_contrato.Contrato) ... ok
+test_solicitud_inexistente_01 (test_contrato.Contrato) ... ok
+test_solicitud_inexistente_02 (test_contrato.Contrato) ... ok
+test_solicitud_inexistente_03 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_01 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_02 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_03 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_04 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_05 (test_contrato.Contrato) ... ok
+test_solicitud_invalida_no_persiste_06 (test_contrato.Contrato) ... ok
+test_solicitud_valida (test_contrato.Contrato) ... ok
+test_transicion_invalida_01 (test_contrato.Contrato) ... ok
+test_transicion_invalida_02 (test_contrato.Contrato) ... ok
+test_transicion_invalida_03 (test_contrato.Contrato) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.106s
+
+OK
