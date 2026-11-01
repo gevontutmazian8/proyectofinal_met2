@@ -1,0 +1,336 @@
+{
+  "comparacion": "IGUALES",
+  "pasos": 10,
+  "inicial": [
+    {
+      "argumentos": [
+        "estudiante",
+        "--nombre",
+        "Estudiante Demo",
+        "--email",
+        "demo@example.test"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "responsable",
+        "--nombre",
+        "Secretar├¡a Demo"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "solicitud",
+        "--estudiante-id",
+        "1",
+        "--tipo",
+        "certificado",
+        "--prioridad",
+        "alta",
+        "--asunto",
+        "Constancia regular",
+        "--descripcion",
+        "Beca ficticia"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "asignar",
+        "--id",
+        "1",
+        "--responsable-id",
+        "1"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "en_proceso"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "listar",
+        "--prioridad",
+        "alta"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": [
+          {
+            "id": 1,
+            "estudiante_id": 1,
+            "tipo": "certificado",
+            "prioridad": "alta",
+            "asunto": "Constancia regular",
+            "descripcion": "Beca ficticia",
+            "estado": "en_proceso",
+            "responsable_id": 1
+          }
+        ]
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "resuelta"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "consultar",
+        "--id",
+        "1"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": {
+          "id": 1,
+          "estudiante_id": 1,
+          "tipo": "certificado",
+          "prioridad": "alta",
+          "asunto": "Constancia regular",
+          "descripcion": "Beca ficticia",
+          "estado": "resuelta",
+          "responsable_id": 1
+        }
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "pendiente"
+      ],
+      "salida": {
+        "ok": false,
+        "error": "Transici├│n inv├ílida"
+      },
+      "codigo": 1
+    },
+    {
+      "argumentos": [
+        "reporte"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": {
+          "total": 1,
+          "por_estado": {
+            "pendiente": 0,
+            "en_proceso": 0,
+            "resuelta": 1,
+            "cancelada": 0
+          }
+        }
+      },
+      "codigo": 0
+    }
+  ],
+  "final": [
+    {
+      "argumentos": [
+        "estudiante",
+        "--nombre",
+        "Estudiante Demo",
+        "--email",
+        "demo@example.test"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "responsable",
+        "--nombre",
+        "Secretar├¡a Demo"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "solicitud",
+        "--estudiante-id",
+        "1",
+        "--tipo",
+        "certificado",
+        "--prioridad",
+        "alta",
+        "--asunto",
+        "Constancia regular",
+        "--descripcion",
+        "Beca ficticia"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": 1
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "asignar",
+        "--id",
+        "1",
+        "--responsable-id",
+        "1"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "en_proceso"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "listar",
+        "--prioridad",
+        "alta"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": [
+          {
+            "id": 1,
+            "estudiante_id": 1,
+            "tipo": "certificado",
+            "prioridad": "alta",
+            "asunto": "Constancia regular",
+            "descripcion": "Beca ficticia",
+            "estado": "en_proceso",
+            "responsable_id": 1
+          }
+        ]
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "resuelta"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": null
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "consultar",
+        "--id",
+        "1"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": {
+          "id": 1,
+          "estudiante_id": 1,
+          "tipo": "certificado",
+          "prioridad": "alta",
+          "asunto": "Constancia regular",
+          "descripcion": "Beca ficticia",
+          "estado": "resuelta",
+          "responsable_id": 1
+        }
+      },
+      "codigo": 0
+    },
+    {
+      "argumentos": [
+        "estado",
+        "--id",
+        "1",
+        "--estado",
+        "pendiente"
+      ],
+      "salida": {
+        "ok": false,
+        "error": "Transici├│n inv├ílida"
+      },
+      "codigo": 1
+    },
+    {
+      "argumentos": [
+        "reporte"
+      ],
+      "salida": {
+        "ok": true,
+        "resultado": {
+          "total": 1,
+          "por_estado": {
+            "pendiente": 0,
+            "en_proceso": 0,
+            "resuelta": 1,
+            "cancelada": 0
+          }
+        }
+      },
+      "codigo": 0
+    }
+  ]
+}
