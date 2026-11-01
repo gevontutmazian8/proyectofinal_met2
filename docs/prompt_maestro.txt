@@ -1,0 +1,1205 @@
+# PROMPT MAESTRO — TRABAJO PRÁCTICO INTEGRADOR DE METODOLOGÍA DE SISTEMAS II
+
+## 1. CONTEXTO Y OBJETIVO PRINCIPAL
+
+Necesito que desarrolles de manera integral, organizada y técnicamente correcta el Trabajo Práctico Integrador de la asignatura **Metodología de Sistemas II**, correspondiente a la Tecnicatura Universitaria en Programación a Distancia de la Universidad Tecnológica Nacional (UTN).
+
+Voy a proporcionarte dos documentos fundamentales:
+
+1. El PDF con la consigna oficial del Trabajo Práctico Integrador.
+2. Un documento Markdown con información complementaria, aclaraciones, criterios de evaluación y orientaciones de la cátedra.
+
+**Antes de comenzar, debés leer y analizar ambos documentos completos.**
+
+La consigna oficial será la fuente principal para determinar los requisitos obligatorios. El material complementario servirá para interpretar y ampliar esos requisitos.
+
+No quiero que simplemente redactes un informe teórico. Necesito que desarrolles un trabajo académico completo, con un sistema funcional, código fuente, diagnóstico técnico, refactorización, pruebas ejecutadas, documentación y evidencias verificables.
+
+El resultado debe ser coherente, reproducible y suficientemente claro como para que yo pueda comprenderlo, ejecutarlo, explicarlo y defender cada decisión tomada.
+
+### Datos académicos
+
+- Universidad: Universidad Tecnológica Nacional (UTN).
+- Carrera: Tecnicatura Universitaria en Programación a Distancia.
+- Asignatura: Metodología de Sistemas II.
+- Trabajo: Trabajo Práctico Integrador.
+- Estudiante: Gevont Utmazian.
+- Comisión: M25 C4-08.
+- Año académico: 2026.
+- Modalidad prevista: individual, sujeta a las condiciones de autorización establecidas por la cátedra.
+
+No inventes nombres de docentes, fechas de entrega, autorizaciones, calificaciones ni datos institucionales que no estén confirmados.
+
+Si algún dato administrativo es indispensable y no está disponible, dejalo claramente identificado para su posterior confirmación.
+
+---
+
+## 2. FORMA DE TRABAJO Y CRITERIOS GENERALES
+
+Quiero que trabajes como un desarrollador de software y analista de calidad con experiencia, pero adaptando el nivel de complejidad al de un estudiante universitario.
+
+El proyecto tiene que demostrar conocimientos reales de la materia, sin convertirse en un sistema excesivamente sofisticado.
+
+### Principios que debés respetar
+
+1. Cumplir todos los requisitos obligatorios de la consigna.
+2. Priorizar la calidad técnica sobre la cantidad de funcionalidades.
+3. Desarrollar un sistema sencillo, pero funcional y verificable.
+4. Mantener una relación clara entre los problemas detectados y las mejoras aplicadas.
+5. Demostrar mediante pruebas que las modificaciones no introdujeron regresiones.
+6. Utilizar explicaciones técnicas comprensibles.
+7. Evitar complejidad arquitectónica innecesaria.
+8. Documentar las decisiones verdaderamente importantes.
+9. Mantener consistencia entre código, capturas, tablas, informe y repositorio.
+10. No inventar pruebas, resultados, capturas, commits o evidencias.
+11. Trabajar de manera progresiva y verificar cada etapa.
+12. No considerar terminado el proyecto hasta completar una auditoría de requisitos.
+
+No quiero recibir solamente recomendaciones, pseudocódigo o ejemplos aislados. Necesito los archivos reales del proyecto, siempre que el entorno de trabajo permita crearlos y ejecutarlos.
+
+Cuando alguna operación no pueda realizarse, explicá concretamente qué falta y cómo completarla.
+
+---
+
+## 3. ESTILO DE REDACCIÓN: NATURAL, ACADÉMICO Y REALISTA
+
+Este punto es especialmente importante.
+
+Quiero que el informe tenga una redacción natural, fluida y propia de un estudiante universitario argentino que comprende los conceptos de la asignatura.
+
+El texto debe ser académico, pero no innecesariamente formal.
+
+### Características de la redacción
+
+- Utilizar español rioplatense adecuado para una entrega universitaria.
+- Escribir con claridad, precisión y naturalidad.
+- Explicar las decisiones con ejemplos concretos del sistema desarrollado.
+- Evitar afirmaciones grandilocuentes.
+- Utilizar párrafos de extensión variable.
+- No repetir constantemente las mismas estructuras.
+- Relacionar los conceptos teóricos con el código del proyecto.
+- Mantener continuidad entre apartados.
+- Usar terminología técnica cuando corresponda, explicándola de forma comprensible.
+- Reconocer las limitaciones reales del desarrollo.
+
+### Evitar expresiones artificiales o repetitivas
+
+No abusar de frases como:
+
+- "En el presente trabajo práctico..."
+- "Cabe destacar que..."
+- "Es importante mencionar que..."
+- "En un mundo cada vez más digitalizado..."
+- "En conclusión, podemos afirmar..."
+- "Esta solución innovadora y robusta..."
+- "Se garantiza una arquitectura altamente escalable..."
+
+Tampoco quiero que todos los párrafos comiencen con expresiones similares.
+
+### Ejemplo del estilo esperado
+
+En lugar de escribir:
+
+"Se procedió a implementar una refactorización mediante la cual se optimizó significativamente la mantenibilidad y escalabilidad del sistema."
+
+Preferir algo como:
+
+"Durante la revisión encontramos que una misma función se encargaba de validar los datos, registrar la solicitud y mostrar los resultados. Esto hacía que el código fuera difícil de modificar. Para resolverlo, separamos esas responsabilidades en funciones más pequeñas y comprobamos que el sistema siguiera funcionando como antes."
+
+Ese es el estilo que busco: concreto, técnico y natural.
+
+La redacción debe corresponderse con el trabajo realmente realizado. No atribuyas experiencias, decisiones manuales o pruebas al estudiante si no ocurrieron.
+
+El uso de inteligencia artificial debe declararse honestamente, tal como exige la consigna.
+
+---
+
+# 4. SELECCIÓN DEL SISTEMA A DESARROLLAR
+
+Si no te proporciono un sistema existente, utilizá el caso sugerido por la cátedra:
+
+**Sistema de Gestión de Solicitudes Académicas.**
+
+Este sistema permitirá gestionar solicitudes realizadas por estudiantes de una institución educativa.
+
+La idea es desarrollar una aplicación pequeña que permita registrar solicitudes, asignar responsables, modificar estados, consultar información y generar reportes.
+
+No necesito una plataforma empresarial ni una aplicación web compleja.
+
+El objetivo es disponer de un sistema suficientemente completo para analizar su calidad interna y mejorarlo mediante refactoring.
+
+## 4.1. Alcance funcional
+
+El sistema debe implementar, como mínimo:
+
+1. Registrar estudiantes.
+2. Registrar solicitudes académicas.
+3. Clasificar solicitudes por tipo.
+4. Establecer prioridades.
+5. Asignar responsables.
+6. Modificar el estado de una solicitud.
+7. Consultar solicitudes registradas.
+8. Buscar y filtrar solicitudes.
+9. Generar un reporte básico.
+
+Estas operaciones pueden combinarse si el diseño del sistema lo justifica.
+
+## 4.2. Entidades principales
+
+Utilizar como mínimo las siguientes:
+
+- Estudiante.
+- Solicitud.
+- Responsable o Área.
+- Estado.
+
+Podés representar tipo y prioridad mediante enumeraciones o estructuras equivalentes.
+
+Las relaciones entre entidades deben ser coherentes y estar documentadas.
+
+## 4.3. Persistencia
+
+El sistema debe guardar o simular correctamente los datos.
+
+Como opción inicial, utilizar:
+
+- Python 3.11 o superior.
+- SQLite para persistencia.
+- Una interfaz de consola sencilla.
+- pytest para las pruebas automatizadas.
+- Git para control de versiones.
+
+Esta tecnología es una propuesta, no una exigencia de la cátedra.
+
+Si encontrás una alternativa más apropiada para el contexto académico, explicá sus ventajas antes de adoptarla.
+
+La aplicación debe funcionar localmente, sin depender de servicios pagos o configuraciones externas complejas.
+
+Utilizá únicamente información ficticia o anonimizada.
+
+---
+
+# 5. CONSTRUCCIÓN DE LA VERSIÓN INICIAL
+
+La consigna exige trabajar sobre un sistema existente o un prototipo inicial.
+
+Si creás el prototipo específicamente para esta actividad, indicá ese origen con transparencia.
+
+Primero desarrollá una versión base que funcione, pero que presente debilidades técnicas reales y analizables.
+
+No necesito que el programa falle deliberadamente.
+
+La aplicación inicial debe ejecutar sus operaciones correctamente y permitir observar problemas en la organización del código.
+
+Esos problemas pueden surgir de decisiones de diseño simples que resulten difíciles de mantener.
+
+### Características de la versión inicial
+
+- Al menos tres entidades o estructuras principales.
+- Al menos cuatro operaciones funcionales verificables.
+- Persistencia o simulación coherente de datos.
+- Funcionalidades ejecutables.
+- Problemas de diseño identificables.
+- Comportamiento reproducible para compararlo con la versión final.
+
+### Posibles problemas a analizar
+
+- Funciones demasiado extensas.
+- Código duplicado.
+- Responsabilidades mezcladas.
+- Nombres poco descriptivos.
+- Dependencias innecesariamente fuertes.
+- Validaciones repetidas.
+- Parámetros excesivos.
+- Condicionales complejos.
+- Valores mágicos.
+- Manejo de errores inconsistente.
+
+No introduzcas problemas absurdos únicamente para completar la cantidad exigida.
+
+Los defectos seleccionados deben poder explicarse y corregirse de manera razonable.
+
+Antes de refactorizar, guardá un estado inicial verificable del proyecto.
+
+---
+
+# 6. DESARROLLO DE LAS OCHO ETAPAS OBLIGATORIAS
+
+## ETAPA 1 — Selección y descripción del sistema base
+
+Elaborá una descripción completa del sistema seleccionado.
+
+Debe incluir:
+
+- Nombre del sistema.
+- Problema que busca resolver.
+- Contexto de utilización.
+- Usuarios y actores.
+- Alcance del proyecto.
+- Funcionalidades principales.
+- Entidades y relaciones.
+- Tecnologías utilizadas.
+- Justificación de las tecnologías.
+- Estructura inicial del código.
+- Forma de ejecución.
+- Limitaciones funcionales.
+
+Incluí un esquema o diagrama sencillo cuando ayude a comprender la solución.
+
+Documentá el funcionamiento de la versión inicial mediante capturas auténticas o salidas verificables.
+
+Explicá por qué este sistema resulta adecuado para aplicar los contenidos de la materia.
+
+## ETAPA 2 — Calidad externa y calidad interna
+
+Analizá la diferencia entre ambos conceptos utilizando el sistema desarrollado.
+
+### Calidad externa
+
+Evaluá aspectos observables por el usuario:
+
+- Funcionamiento de las operaciones.
+- Respuestas ante entradas válidas e inválidas.
+- Claridad de los mensajes.
+- Consistencia de los resultados.
+- Facilidad de uso.
+- Comportamiento esperado.
+
+### Calidad interna
+
+Evaluá aspectos relacionados con el código:
+
+- Legibilidad.
+- Mantenibilidad.
+- Cohesión.
+- Acoplamiento.
+- Responsabilidades.
+- Organización modular.
+- Reutilización.
+- Facilidad de prueba.
+- Facilidad para incorporar modificaciones futuras.
+
+Elaborá una tabla comparativa que muestre situaciones concretas.
+
+Por ejemplo, una función puede registrar correctamente una solicitud desde la perspectiva del usuario, pero internamente mezclar validaciones, persistencia y presentación.
+
+Explicá por qué ese problema es relevante, aunque la aplicación aparentemente funcione bien.
+
+No quiero una sección formada solamente por definiciones teóricas.
+
+## ETAPA 3 — Deuda técnica y code smells
+
+Identificá **al menos ocho problemas técnicos reales** presentes en la versión inicial.
+
+Para cada problema, documentá:
+
+1. Identificador.
+2. Nombre del code smell.
+3. Archivo y ubicación.
+4. Fragmento de código original.
+5. Descripción del problema.
+6. Evidencia concreta.
+7. Impacto sobre la calidad.
+8. Riesgo de mantenimiento.
+9. Prioridad de corrección.
+10. Mejora propuesta.
+11. Relación con los refactorings posteriores.
+
+Utilizá una tabla resumen y después desarrollá los casos que requieran mayor explicación.
+
+Clasificá los problemas por prioridad alta, media o baja.
+
+Justificá esa clasificación.
+
+No todos los problemas tienen que tener la misma gravedad.
+
+Es fundamental mantener trazabilidad entre cada problema detectado y las mejoras implementadas.
+
+Si alguno se decide no corregir, explicá por qué.
+
+## ETAPA 4 — Aplicación de SOLID y Clean Code
+
+Analizá los cinco principios SOLID:
+
+- SRP: Single Responsibility Principle.
+- OCP: Open/Closed Principle.
+- LSP: Liskov Substitution Principle.
+- ISP: Interface Segregation Principle.
+- DIP: Dependency Inversion Principle.
+
+Evaluá cuáles corresponden realmente al diseño del sistema.
+
+No fuerces herencia, interfaces o abstracciones artificiales solamente para afirmar que se aplicaron los cinco principios.
+
+Cuando un principio no resulte especialmente relevante, explicá por qué.
+
+### Mejoras esperadas
+
+- Separación de responsabilidades.
+- Nombres más descriptivos.
+- Métodos de tamaño razonable.
+- Eliminación de duplicaciones.
+- Organización modular.
+- Validaciones consistentes.
+- Tratamiento adecuado de errores.
+- Reducción del acoplamiento.
+- Mejora de la cohesión.
+- Claridad en las dependencias.
+
+Para cada mejora importante, documentá:
+
+**Problema identificado → principio aplicado → modificación realizada → beneficio obtenido.**
+
+Mostrá ejemplos concretos del código anterior y del mejorado.
+
+No utilices afirmaciones genéricas sobre SOLID sin relacionarlas con la implementación.
+
+## ETAPA 5 — Refactoring seguro
+
+Aplicá **al menos cuatro refactorings reales y documentados**.
+
+La consigna exige incluir:
+
+1. Extract Method.
+2. Move Method o reubicación equivalente de responsabilidades.
+3. Introduce Parameter Object o una simplificación equivalente de parámetros.
+4. Una técnica adicional apropiada para los problemas detectados.
+
+La cuarta técnica puede ser, por ejemplo:
+
+- Extract Class.
+- Replace Magic Number with Symbolic Constant.
+- Decompose Conditional.
+- Replace Conditional with Polymorphism.
+
+Seleccioná la técnica según las necesidades reales del código.
+
+### Para cada refactoring
+
+Registrá:
+
+- Nombre de la técnica.
+- Problema que resuelve.
+- Ubicación original.
+- Fragmento de código anterior.
+- Código refactorizado.
+- Explicación del cambio.
+- Principio de diseño relacionado.
+- Beneficio esperado.
+- Pruebas ejecutadas.
+- Resultado de la verificación.
+- Commit o referencia donde se implementó.
+
+Es muy importante distinguir entre refactoring y agregado de funcionalidad.
+
+No mezcles cambios de comportamiento con cambios puramente estructurales sin documentarlos por separado.
+
+Realizá modificaciones pequeñas y verificables.
+
+Luego de cada cambio significativo, ejecutá las pruebas correspondientes.
+
+## ETAPA 6 — Pruebas y verificación del comportamiento
+
+Necesito evidencia de que el sistema sigue funcionando correctamente después de las modificaciones.
+
+Prepará un conjunto de pruebas que cubra las operaciones principales y los casos límite.
+
+Como objetivo de calidad, intentá incluir al menos doce casos de prueba relevantes.
+
+### Casos sugeridos
+
+1. Registrar estudiante válido.
+2. Registrar solicitud válida.
+3. Rechazar una solicitud con datos obligatorios faltantes.
+4. Asignar un responsable.
+5. Cambiar el estado de una solicitud.
+6. Rechazar un cambio de estado inválido.
+7. Consultar solicitudes.
+8. Filtrar por prioridad.
+9. Filtrar por estado.
+10. Generar reporte.
+11. Recuperar información persistida.
+12. Verificar comportamiento ante identificadores inexistentes.
+
+Podés agregar o adaptar casos según la implementación.
+
+### Tabla de pruebas
+
+Para cada caso, registrar:
+
+- Identificador.
+- Funcionalidad.
+- Datos de entrada.
+- Resultado esperado.
+- Resultado obtenido antes.
+- Resultado obtenido después.
+- Estado de la prueba.
+- Evidencia disponible.
+
+Siempre que sea posible, automatizá las pruebas con pytest.
+
+Ejecutá efectivamente los tests.
+
+No inventes mensajes de consola ni resultados.
+
+Incluí capturas o registros auténticos de ejecución.
+
+Si una prueba falla, investigá la causa y corregí el problema antes de continuar.
+
+Explicá cómo se verificó la ausencia de regresiones funcionales.
+
+Si utilizás cobertura de código, indicá el comando empleado y el resultado real.
+
+## ETAPA 7 — Code review profesional
+
+Elaborá un checklist técnico de revisión.
+
+Debe contemplar, como mínimo:
+
+- Legibilidad.
+- Nomenclatura.
+- Responsabilidades.
+- Duplicación.
+- Complejidad.
+- Manejo de errores.
+- Validaciones.
+- Cohesión.
+- Acoplamiento.
+- Principios SOLID.
+- Organización de archivos.
+- Persistencia.
+- Pruebas.
+- Documentación.
+- Seguridad básica y datos sensibles.
+- Mantenibilidad.
+
+Aplicá el checklist al repositorio real.
+
+### Registro de revisión
+
+Para cada observación relevante, indicá:
+
+- Identificador.
+- Archivo revisado.
+- Problema observado.
+- Severidad.
+- Recomendación.
+- Acción correctiva.
+- Resultado.
+- Estado final.
+
+Incluí feedback técnico breve y objetivo.
+
+Establecé criterios claros de aceptación.
+
+Como se trata inicialmente de una entrega individual, si la revisión es realizada por el propio autor, identificala como **autorrevisión técnica**.
+
+No inventes compañeros, revisores externos ni aprobaciones de terceros.
+
+## ETAPA 8 — Conclusiones y aprendizaje
+
+Elaborá conclusiones conectadas directamente con el trabajo realizado.
+
+Desarrollá:
+
+- Principales problemas identificados.
+- Cambios más importantes.
+- Beneficios observados.
+- Dificultades técnicas reales.
+- Decisiones que resultaron acertadas.
+- Limitaciones del sistema.
+- Aspectos que podrían mejorarse.
+- Relación con los contenidos de la materia.
+- Aprendizajes obtenidos.
+
+Redactá una conclusión individual a nombre de Gevont Utmazian.
+
+No atribuyas experiencias personales que no hayan sido verificadas.
+
+La conclusión debe reflejar que el objetivo del trabajo no era desarrollar muchas funcionalidades, sino mejorar la calidad interna de un sistema manteniendo su funcionamiento.
+
+---
+
+# 7. CONTROL DE VERSIONES Y REPOSITORIO GITHUB
+
+Organizá el proyecto para que pueda publicarse en un repositorio GitHub.
+
+Utilizá nombres de archivos y directorios claros.
+
+El historial debe reflejar de manera comprensible la evolución del desarrollo.
+
+## Tags obligatorios
+
+Respetá exactamente los nombres exigidos por la consigna:
+
+| Tag | Estado que debe identificar |
+|---|---|
+| `estado-inicial` | Sistema base original |
+| `etapa-diagnostico` | Diagnóstico técnico documentado |
+| `etapa-refactoring` | Refactorizaciones realizadas |
+| `etapa-pruebas` | Pruebas y verificaciones |
+| `etapa-docs` | Documentación |
+| `estadorefactorizado` | Estado final del sistema |
+
+No cambies la escritura de esos tags.
+
+Verificá que cada uno apunte al commit correspondiente.
+
+No etiquetes diferentes etapas de manera incorrecta solamente para cumplir con el listado.
+
+### Historial de commits
+
+Utilizá mensajes descriptivos y naturales.
+
+Ejemplos orientativos:
+
+- Versión inicial del sistema de solicitudes.
+- Incorporación del diagnóstico de calidad.
+- Separación de responsabilidades en solicitudes.
+- Refactorización del manejo de parámetros.
+- Incorporación de pruebas automatizadas.
+- Documentación y revisión técnica final.
+
+No simules commits anteriores ni alteres el historial para aparentar actividades inexistentes.
+
+Prepará el repositorio local con sus commits y tags. No publiques ni sobrescribas repositorios remotos sin mi autorización.
+
+### README.md
+
+Debe incluir:
+
+1. Nombre del proyecto.
+2. Descripción general.
+3. Objetivo académico.
+4. Funcionalidades.
+5. Tecnologías utilizadas.
+6. Requisitos de instalación.
+7. Instrucciones de ejecución.
+8. Instrucciones para correr las pruebas.
+9. Estructura de carpetas.
+10. Descripción de la versión inicial y la final.
+11. Explicación de los tags.
+12. Autor.
+13. Comisión.
+14. Referencia al informe y demás evidencias.
+
+Las instrucciones deben ser suficientemente claras para ejecutar el proyecto desde cero en otra computadora.
+
+---
+
+# 8. INFORME ACADÉMICO COMPLETO
+
+Prepará un informe académico final en PDF.
+
+Siempre que sea posible, generá también una versión editable en LaTeX o en un formato equivalente.
+
+El PDF tiene que estar correctamente compuesto, con buena presentación, numeración de páginas, títulos consistentes y tablas legibles.
+
+## Estructura del informe
+
+### Portada
+
+Incluir:
+
+**Universidad Tecnológica Nacional**
+
+Tecnicatura Universitaria en Programación a Distancia
+
+**Metodología de Sistemas II**
+
+**Trabajo Práctico Integrador**
+
+*Evolución profesional de un sistema existente: calidad, deuda técnica, refactoring y revisión técnica*
+
+Estudiante: Gevont Utmazian
+
+Comisión: M25 C4-08
+
+Año: 2026
+
+Fecha: confirmar antes de la entrega.
+
+### Índice
+
+Generar un índice con numeración de páginas.
+
+### 1. Resumen ejecutivo
+
+Redactar entre cinco y siete líneas.
+
+Debe sintetizar el sistema analizado, el problema principal, las mejoras implementadas y la verificación realizada.
+
+### 2. Introducción y objetivos
+
+Explicar el contexto académico, el propósito del trabajo y los objetivos del análisis.
+
+### 3. Descripción del sistema base
+
+Incorporar dominio, alcance, actores, tecnologías, funcionalidades y estructura inicial.
+
+### 4. Calidad externa e interna
+
+Incluir conceptos, análisis concreto y comparación.
+
+### 5. Deuda técnica y code smells
+
+Presentar al menos ocho problemas con evidencia, impacto y prioridad.
+
+### 6. Aplicación de SOLID y Clean Code
+
+Relacionar los principios con cambios verificables del código.
+
+### 7. Refactorings aplicados
+
+Documentar al menos cuatro técnicas con comparaciones antes/después.
+
+### 8. Pruebas y verificación
+
+Incluir metodología, casos, resultados reales y evidencia.
+
+### 9. Code review
+
+Presentar checklist, observaciones, correcciones y criterios de aceptación.
+
+### 10. Conclusiones
+
+Incluir reflexiones del trabajo y conclusión individual.
+
+### 11. Uso de inteligencia artificial
+
+Declarar las herramientas realmente utilizadas, su finalidad y su grado de intervención.
+
+### 12. Referencias y documentación
+
+Incluir fuentes utilizadas, documentación técnica y enlaces verificables.
+
+### 13. Anexos
+
+Incorporar evidencias, capturas, registros, diagramas y archivos complementarios.
+
+Podés adaptar la numeración siempre que los contenidos obligatorios estén presentes.
+
+---
+
+# 9. REQUISITOS DE PRESENTACIÓN DEL PDF
+
+Quiero un documento cuidado, pero sin una estética exageradamente empresarial.
+
+Usar:
+
+- Tipografía académica legible.
+- Márgenes adecuados.
+- Encabezados consistentes.
+- Numeración de páginas.
+- Índice automático.
+- Tablas correctamente alineadas.
+- Fragmentos de código con formato diferenciado.
+- Capturas nítidas.
+- Leyendas descriptivas.
+- Referencias cruzadas cuando correspondan.
+- Títulos y subtítulos bien jerarquizados.
+
+Evitá tablas que se corten incorrectamente entre páginas.
+
+No coloques imágenes decorativas que no aporten información.
+
+Las capturas deben mostrar resultados reales del programa, comandos ejecutados, código o pruebas.
+
+Verificá el PDF final visualmente para detectar:
+
+- Texto superpuesto.
+- Páginas vacías innecesarias.
+- Tablas desbordadas.
+- Capturas ilegibles.
+- Errores de numeración.
+- Imágenes cortadas.
+- Referencias inexistentes.
+- Fragmentos de código mal formateados.
+
+El informe debe poder leerse de manera independiente, sin necesidad de abrir todos los archivos del repositorio para entender los resultados principales.
+
+---
+
+# 10. REGISTRO DEL USO DE INTELIGENCIA ARTIFICIAL
+
+La consigna permite utilizar inteligencia artificial, pero exige declarar su utilización y conservar evidencia.
+
+Prepará un apartado específico para este propósito.
+
+### Información a registrar
+
+- Herramienta utilizada.
+- Fecha de utilización, cuando se conozca.
+- Finalidad de la consulta.
+- Prompt o instrucción relevante.
+- Resultado obtenido.
+- Forma en que se utilizó el resultado.
+- Validaciones realizadas.
+- Grado de intervención.
+
+Registrá también el presente prompt maestro como parte de las instrucciones utilizadas.
+
+No inventes intercambios, fechas ni capturas.
+
+Prepará un historial organizado de las interacciones reales disponibles.
+
+Si alguna interacción no puede recuperarse, indicá esa limitación.
+
+No afirmes que la inteligencia artificial solamente corrigió ortografía si también intervino en el diseño, la programación o la documentación.
+
+El objetivo es cumplir con la política académica de transparencia y dejar constancia del proceso de trabajo.
+
+---
+
+# 11. ANEXOS Y EVIDENCIAS
+
+Prepará una carpeta específica para las evidencias técnicas.
+
+Como mínimo, intentá incluir:
+
+- Capturas del sistema inicial.
+- Capturas del sistema final.
+- Evidencias de los code smells.
+- Comparaciones de código.
+- Resultados de pruebas.
+- Checklist de revisión.
+- Registro de refactorings.
+- Diagramas utilizados.
+- Historial de comandos relevantes.
+- Referencias a commits y tags.
+- Documentación complementaria.
+- Registro de interacciones con IA.
+
+Cada evidencia debe tener un nombre descriptivo.
+
+Por ejemplo:
+
+`evidencia_01_sistema_inicial.png`
+
+`evidencia_02_code_smell_funcion_extensa.png`
+
+`evidencia_03_extract_method.png`
+
+`evidencia_04_pruebas_refactorizacion.png`
+
+Los nombres son orientativos.
+
+No fabriques capturas utilizando imágenes que imiten una consola o un editor.
+
+Toda evidencia presentada como ejecución real debe provenir del programa o de las herramientas utilizadas.
+
+---
+
+# 12. VIDEO DE DEFENSA Y DEMOSTRACIÓN
+
+La consigna solicita un video de aproximadamente 10 a 15 minutos.
+
+Prepará todo el material necesario para poder grabarlo personalmente.
+
+No generes voces artificiales ni simules la participación del estudiante.
+
+La defensa debe realizarse con voz propia y cámara encendida, mostrando rostro y nombre completo.
+
+## Guion solicitado
+
+Prepará un guion detallado, natural y fácil de explicar.
+
+Debe estar escrito para Gevont Utmazian, utilizando expresiones comprensibles.
+
+Dividilo aproximadamente de esta manera:
+
+### Minuto 0:00 a 1:00 — Presentación
+
+- Nombre.
+- Materia.
+- Comisión.
+- Objetivo general del trabajo.
+
+### Minuto 1:00 a 2:30 — Sistema base
+
+- Qué sistema se desarrolló.
+- Para qué sirve.
+- Qué funcionalidades tiene.
+- Demostración breve.
+
+### Minuto 2:30 a 4:30 — Diagnóstico
+
+- Diferencia entre calidad externa e interna.
+- Problemas encontrados.
+- Principales code smells.
+
+### Minuto 4:30 a 7:30 — Mejoras
+
+- Aplicación de SOLID.
+- Clean Code.
+- Refactorings realizados.
+- Comparaciones de código.
+
+### Minuto 7:30 a 9:30 — Pruebas
+
+- Cómo se verificó el funcionamiento.
+- Ejecución de tests.
+- Resultados antes y después.
+
+### Minuto 9:30 a 11:30 — Code review
+
+- Checklist.
+- Problemas revisados.
+- Correcciones aplicadas.
+
+### Minuto 11:30 a 13:00 — Conclusiones
+
+- Qué mejoró.
+- Qué dificultades aparecieron.
+- Qué se aprendió.
+- Qué podría mejorarse.
+
+Los tiempos son orientativos y pueden adaptarse a la duración real de la demostración.
+
+### Características del guion
+
+Quiero poder leerlo, estudiarlo y explicarlo sin necesidad de memorizar frases excesivamente técnicas.
+
+Utilizá un tono natural.
+
+Indicá cuándo corresponde:
+
+- Mostrar la pantalla.
+- Abrir un archivo.
+- Ejecutar un comando.
+- Comparar dos fragmentos.
+- Mostrar el resultado de un test.
+- Enseñar un commit o tag.
+
+Prepará también posibles preguntas del docente, con respuestas claras.
+
+Incluí preguntas sobre:
+
+- Calidad interna y externa.
+- Deuda técnica.
+- Code smells.
+- SOLID.
+- Clean Code.
+- Refactoring.
+- Pruebas de regresión.
+- Code review.
+- Decisiones tecnológicas.
+- Limitaciones.
+- Autoría y comprensión del desarrollo.
+
+No necesito solamente un texto para leer: necesito comprender el contenido para defenderlo correctamente.
+
+---
+
+# 13. PRESENTACIÓN COMPLEMENTARIA
+
+El material de la cátedra incluye un modelo orientativo de presentación.
+
+Si resulta útil, prepará una presentación breve de aproximadamente 10 a 12 diapositivas.
+
+No la consideres un sustituto del PDF obligatorio.
+
+### Estructura sugerida
+
+1. Portada.
+2. Objetivo del trabajo.
+3. Descripción del sistema.
+4. Calidad interna y externa.
+5. Deuda técnica.
+6. Code smells identificados.
+7. Aplicación de SOLID.
+8. Refactorings.
+9. Comparación antes/después.
+10. Pruebas y resultados.
+11. Code review.
+12. Conclusiones.
+
+Utilizá poco texto y ejemplos concretos.
+
+No llenes las diapositivas de definiciones.
+
+Cada diapositiva debe servir como apoyo para explicar el trabajo.
+
+---
+
+# 14. ESTRUCTURA DE ARCHIVOS DEL PROYECTO
+
+Organizá los archivos utilizando una estructura clara.
+
+Podés utilizar como referencia:
+
+```text
+TPI_Metodologia_Sistemas_II/
+│
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── src/
+│   └── codigo_fuente/
+│
+├── tests/
+│   └── pruebas_automatizadas/
+│
+├── docs/
+│   ├── descripcion_sistema.md
+│   ├── diagnostico_calidad.md
+│   ├── code_smells.md
+│   ├── principios_solid.md
+│   ├── refactorings.md
+│   ├── checklist_code_review.md
+│   ├── decisiones_tecnicas.md
+│   └── registro_ia.md
+│
+├── evidencias/
+│   ├── sistema_inicial/
+│   ├── diagnostico/
+│   ├── refactoring/
+│   ├── pruebas/
+│   └── code_review/
+│
+├── informe/
+│   ├── Informe_TPI_MS2_Gevont_Utmazian.pdf
+│   └── fuente_editable/
+│
+├── defensa/
+│   ├── guion_defensa.md
+│   ├── preguntas_docente.md
+│   └── presentacion/
+│
+└── entrega/
+    └── TPI_MS2_Gevont_Utmazian.zip
+```
+
+Esta estructura es orientativa.
+
+Adaptala al lenguaje y las tecnologías efectivamente utilizadas.
+
+No crees archivos vacíos solamente para aparentar una entrega más completa.
+
+El ZIP debe contener los recursos necesarios para revisar y ejecutar el proyecto.
+
+El repositorio Git debe mantener los commits y tags correspondientes. Si el ZIP no incluye el historial Git, documentá cómo acceder a él mediante el repositorio.
+
+---
+
+# 15. AUDITORÍA DE LOS CRITERIOS DE EVALUACIÓN
+
+Antes de finalizar, realizá una revisión completa de acuerdo con la rúbrica de la asignatura.
+
+| Criterio | Ponderación |
+|---|---:|
+| Diagnóstico de calidad interna y externa | 15 % |
+| Deuda técnica y code smells | 20 % |
+| Aplicación de SOLID y Clean Code | 20 % |
+| Refactoring seguro | 20 % |
+| Pruebas y verificación | 10 % |
+| Code review profesional | 10 % |
+| Presentación, repositorio y defensa | 5 % |
+| **Total** | **100 %** |
+
+Revisá cada apartado con criterio exigente.
+
+No asignes una nota ficticia ni prometas una calificación.
+
+Evaluá si existe suficiente evidencia para demostrar el cumplimiento de cada requisito.
+
+### Matriz final de cumplimiento
+
+Prepará una tabla con estas columnas:
+
+1. Requisito.
+2. Estado.
+3. Evidencia.
+4. Archivo donde se encuentra.
+5. Observaciones.
+6. Acción pendiente, si corresponde.
+
+Utilizá los estados:
+
+- Cumplido.
+- Parcialmente cumplido.
+- Pendiente.
+- No verificable.
+
+No marques un requisito como cumplido si la evidencia todavía no existe.
+
+Verificá especialmente:
+
+- Sistema inicial funcional.
+- Al menos tres entidades.
+- Al menos cuatro operaciones.
+- Persistencia de datos.
+- Comparación antes/después.
+- Al menos ocho code smells.
+- Aplicación justificada de SOLID y Clean Code.
+- Al menos cuatro refactorings.
+- Pruebas ejecutadas.
+- Ausencia de regresiones conocidas.
+- Checklist de code review.
+- Correcciones documentadas.
+- Informe PDF completo.
+- Registro del uso de IA.
+- Anexo de evidencias.
+- README.
+- Tags obligatorios.
+- ZIP final.
+- Material para defensa.
+- Enlaces accesibles.
+- Video grabado por el estudiante.
+
+---
+
+# 16. METODOLOGÍA DE EJECUCIÓN
+
+No intentes resolver todo mediante una única respuesta teórica.
+
+Trabajá por fases, produciendo y verificando los archivos correspondientes.
+
+### Fase 1 — Análisis
+
+Leer las consignas, identificar requisitos y preparar una matriz de cumplimiento.
+
+### Fase 2 — Sistema inicial
+
+Desarrollar el prototipo, ejecutarlo, registrar su comportamiento y guardar la versión base.
+
+### Fase 3 — Diagnóstico
+
+Analizar el código, identificar los ocho problemas técnicos y priorizar las mejoras.
+
+### Fase 4 — Refactorización
+
+Aplicar los cambios gradualmente, documentarlos y conservar su trazabilidad.
+
+### Fase 5 — Verificación
+
+Ejecutar las pruebas y comparar los resultados antes y después.
+
+### Fase 6 — Revisión técnica
+
+Completar el checklist, registrar observaciones y corregir problemas pendientes.
+
+### Fase 7 — Documentación
+
+Redactar el informe, incorporar evidencias y preparar el registro de IA.
+
+### Fase 8 — Entrega
+
+Generar el PDF, organizar los archivos, preparar el ZIP y comprobar su contenido.
+
+### Fase 9 — Defensa
+
+Preparar el guion, las posibles preguntas y la presentación complementaria.
+
+### Fase 10 — Auditoría final
+
+Verificar todos los requisitos de la consigna y señalar únicamente los pendientes reales.
+
+Antes de continuar de una fase a otra, comprobá que lo producido sea consistente con las etapas anteriores.
+
+Si encontrás un error, corregilo y ejecutá nuevamente las verificaciones afectadas.
+
+---
+
+# 17. RESTRICCIONES IMPORTANTES
+
+No quiero que:
+
+- Entregues código que no haya sido comprobado cuando pueda ejecutarse.
+- Inventes que se ejecutaron pruebas.
+- Incluyas capturas falsas.
+- Inventes referencias bibliográficas.
+- Utilices datos personales reales.
+- Simules una revisión realizada por un compañero.
+- Afirmes que el sistema fue desarrollado previamente si se creó para este trabajo.
+- Agregues funcionalidades innecesarias.
+- Uses arquitecturas excesivamente complejas.
+- Modifiques el comportamiento externo durante un refactoring sin justificarlo.
+- Om itas las evidencias del antes y después.
+- Publiques código en GitHub sin autorización.
+- Inventes enlaces de descarga.
+- Consideres grabado el video cuando solamente preparaste el guion.
+- Ocultes el uso de inteligencia artificial.
+
+La prioridad es entregar un trabajo real, entendible, técnicamente defendible y alineado con la consigna.
+
+---
+
+# 18. RESULTADO FINAL ESPERADO
+
+Al terminar, necesito disponer de:
+
+**1. Proyecto funcional**
+
+Código fuente completo, organizado y ejecutable.
+
+**2. Versiones comparables**
+
+Estado inicial y estado refactorizado identificados mediante los tags correspondientes.
+
+**3. Diagnóstico técnico**
+
+Al menos ocho problemas documentados, con evidencia y prioridad.
+
+**4. Mejoras implementadas**
+
+Aplicación justificada de SOLID, Clean Code y al menos cuatro refactorings.
+
+**5. Pruebas**
+
+Tests automatizados o verificaciones reproducibles, con resultados auténticos.
+
+**6. Code review**
+
+Checklist aplicado, observaciones y correcciones.
+
+**7. Informe académico**
+
+PDF final completo y una fuente editable cuando sea posible.
+
+**8. Evidencias**
+
+Capturas, registros, comparaciones y documentación complementaria.
+
+**9. Repositorio**
+
+Proyecto preparado para GitHub con README, commits y tags.
+
+**10. Archivo ZIP**
+
+Paquete final organizado con los recursos correspondientes.
+
+**11. Defensa**
+
+Guion oral natural, instrucciones de demostración y respuestas para posibles preguntas.
+
+**12. Transparencia académica**
+
+Registro real del uso de inteligencia artificial y de su intervención en el proyecto.
+
+**13. Auditoría final**
+
+Matriz de cumplimiento que indique qué está terminado y qué requiere una acción adicional.
+
+---
+
+# 19. INSTRUCCIÓN FINAL
+
+Quiero que desarrolles este Trabajo Práctico Integrador con el mayor nivel de calidad posible, respetando estrictamente la consigna de Metodología de Sistemas II.
+
+El trabajo debe estar identificado a nombre de **Gevont Utmazian, comisión M25 C4-08**.
+
+Prestá especial atención a la coherencia entre las ocho etapas obligatorias, porque el diagnóstico, las mejoras, las pruebas y las conclusiones tienen que corresponder al mismo sistema y al mismo proceso de desarrollo.
+
+Priorizá una solución pequeña y bien resuelta.
+
+No necesito cientos de archivos ni una aplicación exageradamente compleja. Necesito demostrar que sé analizar un sistema, identificar problemas técnicos, corregirlos de manera segura y explicar por qué las mejoras son importantes.
+
+Quiero una redacción natural, concreta y académicamente apropiada. Todo lo que figure en el informe debe corresponderse con evidencias o decisiones técnicas que realmente puedan comprobarse.
+
+No des por terminado el proyecto si faltan requisitos obligatorios.
+
+Cuando una actividad dependa de mí, como confirmar una autorización, publicar un repositorio o grabar el video con mi propia voz, prepará todo lo necesario y señalá exactamente qué debo hacer.
+
+**Comenzá leyendo los dos documentos adjuntos, elaborá la matriz de requisitos y después avanzá con el desarrollo real del proyecto hasta completar todos los entregables que puedas producir y verificar.**

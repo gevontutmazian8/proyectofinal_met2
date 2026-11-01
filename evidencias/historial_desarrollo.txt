@@ -1,0 +1,9 @@
+28ac710 | Crear prototipo académico y contrato de comportamiento
+d62f552 | Verificar el prototipo con unittest disponible sin instalación
+efcdcb4 | Documentar ocho debilidades y conservar la referencia inicial
+32d2492 | Extraer operaciones y validación repetida de nombres
+1cfd75c | Mover conexión y transacciones a repositorio SQLite inyectable
+b5eb55f | Introducir NuevaSolicitud conservando la interfaz compatible
+a379c39 | Encapsular consultas y descomponer reglas de dominio en tabla de estados
+b3828db | Verificar consola equivalente, dominio y repositorio sustituible
+85689e4 | Corregir aserciones para que no desaparezcan con optimización
