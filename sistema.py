@@ -2,6 +2,11 @@
 import sqlite3
 
 
+def validar_texto(valor, mensaje):
+    if not isinstance(valor, str) or not valor.strip():
+        raise ValueError(mensaje)
+
+
 class Sistema:
     def __init__(self, ruta=":memory:"):
         self.c = sqlite3.connect(ruta)
@@ -28,91 +33,102 @@ class Sistema:
                            prioridad=prioridad, asunto=asunto, descripcion=descripcion,
                            responsable_id=responsable_id)
 
-    def operar(self, op, **d):
-        if op == "estudiante":
-            if not isinstance(d.get("nombre"), str) or not d["nombre"].strip():
-                raise ValueError("Nombre obligatorio")
-            if not isinstance(d.get("email"), str) or "@" not in d["email"] or not d["email"].strip():
-                raise ValueError("Email inválido")
-            try:
-                with self.c:
-                    r = self.c.execute("INSERT INTO estudiantes(nombre,email) VALUES (?,?)",
-                                       (d["nombre"].strip(), d["email"].strip().lower()))
-                return r.lastrowid
-            except sqlite3.IntegrityError as exc:
-                raise ValueError("Email ya registrado") from exc
-        elif op == "responsable":
-            if not isinstance(d.get("nombre"), str) or not d["nombre"].strip():
-                raise ValueError("Nombre obligatorio")
+    def operar(self, operacion, **datos):
+        acciones = {
+            "estudiante": self._estudiante,
+            "responsable": self._responsable,
+            "solicitud": self._solicitud,
+            "asignar": self._asignar,
+            "estado": self._estado,
+            "consultar": self._consultar,
+            "listar": self._listar,
+            "reporte": self._reporte,
+        }
+        if operacion not in acciones:
+            raise ValueError("Operación desconocida")
+        return acciones[operacion](datos)
+
+    def _estudiante(self, datos):
+        validar_texto(datos.get('nombre'), 'Nombre obligatorio')
+        if not isinstance(datos.get('email'), str) or '@' not in datos['email'] or (not datos['email'].strip()):
+            raise ValueError('Email inválido')
+        try:
             with self.c:
-                r = self.c.execute("INSERT INTO responsables(nombre) VALUES (?)", (d["nombre"].strip(),))
+                r = self.c.execute('INSERT INTO estudiantes(nombre,email) VALUES (?,?)', (datos['nombre'].strip(), datos['email'].strip().lower()))
             return r.lastrowid
-        elif op == "solicitud":
-            if not self.c.execute("SELECT id FROM estudiantes WHERE id=?", (d.get("estudiante_id"),)).fetchone():
-                raise ValueError("Estudiante inexistente")
-            if d.get("tipo") not in ("certificado", "equivalencia", "inscripcion"):
-                raise ValueError("Tipo inválido")
-            if d.get("prioridad") not in ("baja", "media", "alta"):
-                raise ValueError("Prioridad inválida")
-            if not isinstance(d.get("asunto"), str) or not d["asunto"].strip():
-                raise ValueError("Asunto obligatorio")
-            if not isinstance(d.get("descripcion"), str) or not d["descripcion"].strip():
-                raise ValueError("Descripción obligatoria")
-            if d.get("responsable_id") is not None:
-                if not self.c.execute("SELECT id FROM responsables WHERE id=?", (d["responsable_id"],)).fetchone():
-                    raise ValueError("Responsable inexistente")
-            with self.c:
-                r = self.c.execute("""INSERT INTO solicitudes
-                    (estudiante_id,tipo,prioridad,asunto,descripcion,estado,responsable_id)
-                    VALUES (?,?,?,?,?,'pendiente',?)""",
-                    (d["estudiante_id"], d["tipo"], d["prioridad"], d["asunto"].strip(),
-                     d["descripcion"].strip(), d.get("responsable_id")))
-            return r.lastrowid
-        elif op == "asignar":
-            if not self.c.execute("SELECT id FROM solicitudes WHERE id=?", (d.get("id"),)).fetchone():
-                raise ValueError("Solicitud inexistente")
-            if not self.c.execute("SELECT id FROM responsables WHERE id=?", (d.get("responsable_id"),)).fetchone():
-                raise ValueError("Responsable inexistente")
-            with self.c:
-                self.c.execute("UPDATE solicitudes SET responsable_id=? WHERE id=?", (d["responsable_id"], d["id"]))
-            return None
-        elif op == "estado":
-            r = self.c.execute("SELECT * FROM solicitudes WHERE id=?", (d.get("id"),)).fetchone()
-            if r is None:
-                raise ValueError("Solicitud inexistente")
-            if not ((r["estado"] == "pendiente" and d.get("estado") in ("en_proceso", "cancelada"))
-                    or (r["estado"] == "en_proceso" and d.get("estado") in ("resuelta", "cancelada"))):
-                raise ValueError("Transición inválida")
-            with self.c:
-                self.c.execute("UPDATE solicitudes SET estado=? WHERE id=?", (d["estado"], d["id"]))
-            return None
-        elif op == "consultar":
-            r = self.c.execute("SELECT * FROM solicitudes WHERE id=?", (d.get("id"),)).fetchone()
-            if r is None:
-                raise ValueError("Solicitud inexistente")
-            return dict(r)
-        elif op == "listar":
-            q = "SELECT * FROM solicitudes WHERE 1=1"
-            p = []
-            if d.get("estado") is not None:
-                if d["estado"] not in ("pendiente", "en_proceso", "resuelta", "cancelada"):
-                    raise ValueError("Estado inválido")
-                q += " AND estado=?"
-                p.append(d["estado"])
-            if d.get("prioridad") is not None:
-                if d["prioridad"] not in ("baja", "media", "alta"):
-                    raise ValueError("Prioridad inválida")
-                q += " AND prioridad=?"
-                p.append(d["prioridad"])
-            if d.get("texto") is not None:
-                # Búsqueda literal, sin interpretar comodines SQL.
-                q += " AND instr(lower(asunto),lower(?)) > 0"
-                p.append(d["texto"])
-            return [dict(r) for r in self.c.execute(q + " ORDER BY id", p)]
-        elif op == "reporte":
-            filas = self.c.execute("SELECT estado, COUNT(*) AS cantidad FROM solicitudes GROUP BY estado").fetchall()
-            resultado = {"pendiente": 0, "en_proceso": 0, "resuelta": 0, "cancelada": 0}
-            for r in filas:
-                resultado[r["estado"]] = r["cantidad"]
-            return {"total": sum(resultado.values()), "por_estado": resultado}
-        raise ValueError("Operación desconocida")
+        except sqlite3.IntegrityError as exc:
+            raise ValueError('Email ya registrado') from exc
+
+    def _responsable(self, datos):
+        validar_texto(datos.get('nombre'), 'Nombre obligatorio')
+        with self.c:
+            r = self.c.execute('INSERT INTO responsables(nombre) VALUES (?)', (datos['nombre'].strip(),))
+        return r.lastrowid
+
+    def _solicitud(self, datos):
+        if not self.c.execute('SELECT id FROM estudiantes WHERE id=?', (datos.get('estudiante_id'),)).fetchone():
+            raise ValueError('Estudiante inexistente')
+        if datos.get('tipo') not in ('certificado', 'equivalencia', 'inscripcion'):
+            raise ValueError('Tipo inválido')
+        if datos.get('prioridad') not in ('baja', 'media', 'alta'):
+            raise ValueError('Prioridad inválida')
+        if not isinstance(datos.get('asunto'), str) or not datos['asunto'].strip():
+            raise ValueError('Asunto obligatorio')
+        if not isinstance(datos.get('descripcion'), str) or not datos['descripcion'].strip():
+            raise ValueError('Descripción obligatoria')
+        if datos.get('responsable_id') is not None:
+            if not self.c.execute('SELECT id FROM responsables WHERE id=?', (datos['responsable_id'],)).fetchone():
+                raise ValueError('Responsable inexistente')
+        with self.c:
+            r = self.c.execute("INSERT INTO solicitudes\n                    (estudiante_id,tipo,prioridad,asunto,descripcion,estado,responsable_id)\n                    VALUES (?,?,?,?,?,'pendiente',?)", (datos['estudiante_id'], datos['tipo'], datos['prioridad'], datos['asunto'].strip(), datos['descripcion'].strip(), datos.get('responsable_id')))
+        return r.lastrowid
+
+    def _asignar(self, datos):
+        if not self.c.execute('SELECT id FROM solicitudes WHERE id=?', (datos.get('id'),)).fetchone():
+            raise ValueError('Solicitud inexistente')
+        if not self.c.execute('SELECT id FROM responsables WHERE id=?', (datos.get('responsable_id'),)).fetchone():
+            raise ValueError('Responsable inexistente')
+        with self.c:
+            self.c.execute('UPDATE solicitudes SET responsable_id=? WHERE id=?', (datos['responsable_id'], datos['id']))
+        return None
+
+    def _estado(self, datos):
+        r = self.c.execute('SELECT * FROM solicitudes WHERE id=?', (datos.get('id'),)).fetchone()
+        if r is None:
+            raise ValueError('Solicitud inexistente')
+        if not (r['estado'] == 'pendiente' and datos.get('estado') in ('en_proceso', 'cancelada') or (r['estado'] == 'en_proceso' and datos.get('estado') in ('resuelta', 'cancelada'))):
+            raise ValueError('Transición inválida')
+        with self.c:
+            self.c.execute('UPDATE solicitudes SET estado=? WHERE id=?', (datos['estado'], datos['id']))
+        return None
+
+    def _consultar(self, datos):
+        r = self.c.execute('SELECT * FROM solicitudes WHERE id=?', (datos.get('id'),)).fetchone()
+        if r is None:
+            raise ValueError('Solicitud inexistente')
+        return dict(r)
+
+    def _listar(self, datos):
+        q = 'SELECT * FROM solicitudes WHERE 1=1'
+        p = []
+        if datos.get('estado') is not None:
+            if datos['estado'] not in ('pendiente', 'en_proceso', 'resuelta', 'cancelada'):
+                raise ValueError('Estado inválido')
+            q += ' AND estado=?'
+            p.append(datos['estado'])
+        if datos.get('prioridad') is not None:
+            if datos['prioridad'] not in ('baja', 'media', 'alta'):
+                raise ValueError('Prioridad inválida')
+            q += ' AND prioridad=?'
+            p.append(datos['prioridad'])
+        if datos.get('texto') is not None:
+            q += ' AND instr(lower(asunto),lower(?)) > 0'
+            p.append(datos['texto'])
+        return [dict(r) for r in self.c.execute(q + ' ORDER BY id', p)]
+
+    def _reporte(self, datos):
+        filas = self.c.execute('SELECT estado, COUNT(*) AS cantidad FROM solicitudes GROUP BY estado').fetchall()
+        resultado = {'pendiente': 0, 'en_proceso': 0, 'resuelta': 0, 'cancelada': 0}
+        for r in filas:
+            resultado[r['estado']] = r['cantidad']
+        return {'total': sum(resultado.values()), 'por_estado': resultado}
