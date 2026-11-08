@@ -149,7 +149,16 @@ El trabajo se centra en mejorar un módulo acotado sin ampliar sus funciones por
 
 El objetivo general es mostrar una relación verificable entre diagnóstico, cambio y prueba. Los objetivos concretos son separar responsabilidades, reducir duplicaciones, simplificar datos de entrada y explicitar las reglas de estados. Cada mejora se vincula con una debilidad y con registros de ejecución reales.
 
-Este documento está identificado a nombre de Gevont Utmazian, comisión M25 C4-08. La generación contó con asistencia sustancial de IA. La revisión personal, la justificación de modalidad individual, los enlaces externos y la defensa todavía requieren intervención del estudiante. No se atribuyen autorizaciones ni aprendizajes personales no comprobados.
+Este documento corresponde a Gevont Utmazian y Martín Maine, comisión M25 C4-08. La generación contó con asistencia sustancial de IA. La revisión personal, los enlaces externos y la defensa requieren intervención de los integrantes.
+
+## 2.1 Integrantes, modalidad y participación
+
+La modalidad es grupal. La tabla recoge el reparto de participación y las tareas de cada integrante informados por el equipo.
+
+| Integrante | Participación declarada | Detalle de aportes |
+|---|---|---|
+| Gevont Utmazian | 56 % | Diseño del sistema y de la persistencia en SQLite. Diagnóstico de los problemas de diseño, aplicación de las refactorizaciones y comparación del comportamiento entre versiones. |
+| Martín Maine | 44 % | Descripción del caso de uso y del alcance. Preparación de ejemplos de consola, organización de las evidencias de prueba y revisión de la documentación de uso. |
 
 # 3. Sistema base y alcance
 
@@ -243,13 +252,13 @@ Los términos Extract Method e Introduce Parameter Object se emplean según esas
 
 [C1] Cátedra de Metodología de Sistemas II. TP MS2V2.pdf, seis páginas, suministrado por el usuario. Fuente principal de requisitos.
 
-[C2] Material complementario suministrado como Markdown pegado(1).md. Incluye orientaciones de entrega y defensa. Se conserva como docs/material_catedra.md.
+[C2] Material complementario suministrado como Markdown pegado(1).md. Incluye orientaciones de entrega y defensa.
 
-Repositorio GitHub: PENDIENTE DE PUBLICACIÓN AUTORIZADA.
+Repositorio GitHub: [proyectofinal_met2](https://github.com/gevontutmazian8/proyectofinal_met2).
 
-Video personal: PENDIENTE DE GRABACIÓN Y ENLACE.
+Video grupal: PENDIENTE DE GRABACIÓN Y ENLACE.
 
-Fecha de entrega y justificación individual: PENDIENTES DE CONFIRMACIÓN.
+Fecha de entrega: 08/11/2026. Participación de cada integrante: ver sección 2.1.
 
 # 12. Auditoría y cierre de entrega
 
@@ -260,7 +269,8 @@ Fecha de entrega y justificación individual: PENDIENTES DE CONFIRMACIÓN.
     # Lower heading levels in the quoted prompt to keep the main TOC usable.
     prompt = leer("docs/prompt_maestro.txt")
     informe += "\n".join("### " + l.lstrip("# ") if l.startswith("#") else l for l in prompt.splitlines())
-    escribir("informe/Informe_TPI_MS2_Gevont_Utmazian.md", informe + "\n")
+    if not (RAIZ / "informe/Informe_TPI_MS2_Gevont_Utmazian.md").exists():  # el informe ya fue editado a mano
+        escribir("informe/Informe_TPI_MS2_Gevont_Utmazian.md", informe + "\n")
 
 
 if __name__ == "__main__":

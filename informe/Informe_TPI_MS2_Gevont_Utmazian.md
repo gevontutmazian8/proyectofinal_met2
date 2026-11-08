@@ -13,7 +13,16 @@ El trabajo se centra en mejorar un módulo acotado sin ampliar sus funciones por
 
 El objetivo general es mostrar una relación verificable entre diagnóstico, cambio y prueba. Los objetivos concretos son separar responsabilidades, reducir duplicaciones, simplificar datos de entrada y explicitar las reglas de estados. Cada mejora se vincula con una debilidad y con registros de ejecución reales.
 
-Este documento está identificado a nombre de Gevont Utmazian, comisión M25 C4-08. La generación contó con asistencia sustancial de IA. La revisión personal, la justificación de modalidad individual, los enlaces externos y la defensa todavía requieren intervención del estudiante. No se atribuyen autorizaciones ni aprendizajes personales no comprobados.
+Este documento corresponde al trabajo grupal de Gevont Utmazian y Martín Maine, comisión M25 C4-08. La generación contó con asistencia sustancial de IA. La revisión personal de cada integrante, los enlaces externos, el video y la defensa todavía requieren intervención de los estudiantes. No se atribuyen autorizaciones ni aprendizajes personales no comprobados.
+
+## 2.1 Integrantes, modalidad y participación
+
+La modalidad es grupal. La tabla recoge el reparto de participación y las tareas de cada integrante informados por el equipo.
+
+| Integrante | Participación declarada | Detalle de aportes |
+|---|---|---|
+| Gevont Utmazian | 56 % | Diseño del sistema y de la persistencia en SQLite. Diagnóstico de los problemas de diseño, aplicación de las refactorizaciones y comparación del comportamiento entre versiones. |
+| Martín Maine | 44 % | Descripción del caso de uso y del alcance. Preparación de ejemplos de consola, organización de las evidencias de prueba y revisión de la documentación de uso. |
 
 # 3. Sistema base y alcance
 
@@ -42,9 +51,26 @@ python cli.py --db prueba.db reporte
 
 La versión inicial se identifica con estado-inicial y se conserva también en versiones/inicial. El esquema de base no cambia, por lo que la comparación no necesita migraciones. Los datos usados en la demostración son ficticios.
 
-# 4. Calidad externa, deuda técnica y diagnóstico
+# 4. Calidad externa e interna
 
-## 4.1 Diagnóstico documentado
+## 4.1 Comparación de calidad externa e interna
+
+| Situación | Observación externa | Observación interna |
+|---|---|---|
+| Registrar una solicitud válida | Devuelve un identificador y conserva los datos | Una rama combina consultas previas, validaciones y SQL de inserción |
+| Rechazar datos incompletos | Mensaje específico y ninguna solicitud persistida | La validación de texto se repite |
+| Cambiar estado | Impide saltar de pendiente a resuelta | Las reglas están embebidas en una expresión booleana |
+| Filtrar y reportar | Devuelve filas ordenadas y totales consistentes | Literales y acceso a datos viven en el mismo despachador |
+
+Las pruebas externas caracterizan el comportamiento, no certifican por sí solas mantenibilidad, rendimiento o seguridad integral. Los 29 casos iniciales se ejecutaron con `python -m unittest discover -s tests -v`; el registro auténtico está en `evidencias/pruebas/01_inicial.txt`.
+
+## 4.2 Relación con la evolución futura
+
+Desde el punto de vista del usuario, la versión inicial es correcta en los casos cubiertos: registra, asigna, cambia estado, filtra y reporta. La dificultad aparece al cambiar el sistema. Modificar el ciclo de estados exige editar una expresión booleana dentro de `operar`; agregar una operación obliga a ampliar el mismo despachador; y probar una regla requiere montar SQLite. Esos costos no se ven en la consola, pero determinan cuánto cuesta cada cambio y cuánto riesgo conlleva. La sección 5 detalla las ocho debilidades que explican esa diferencia y la sección 7 muestra cómo se redujeron.
+
+# 5. Deuda técnica y code smells
+
+## 5.1 Diagnóstico documentado
 
 La referencia estable es `estado-inicial:sistema.py`. El prototipo fue construido para el TPI con una organización monolítica deliberadamente simple. No se presenta como software heredado de una institución. Funciona en los 29 casos de contrato ejecutados, pero modificarlo exige conocer SQL, reglas de negocio y el despachador de operaciones en una misma clase.
 
@@ -63,18 +89,7 @@ CS03 describe la falta de cohesión de la clase; CS08, la dependencia concreta d
 
 La prioridad alta se reserva para cambios que afectan reglas o varias operaciones. La media corresponde a duplicaciones y firmas que multiplican el costo del cambio. La baja corresponde a legibilidad localizada. No se asignaron tiempos ni costos económicos ficticios.
 
-## 4.2 Comparación de calidad
-
-| Situación | Observación externa | Observación interna |
-|---|---|---|
-| Registrar una solicitud válida | Devuelve un identificador y conserva los datos | Una rama combina consultas previas, validaciones y SQL de inserción |
-| Rechazar datos incompletos | Mensaje específico y ninguna solicitud persistida | La validación de texto se repite |
-| Cambiar estado | Impide saltar de pendiente a resuelta | Las reglas están embebidas en una expresión booleana |
-| Filtrar y reportar | Devuelve filas ordenadas y totales consistentes | Literales y acceso a datos viven en el mismo despachador |
-
-Las pruebas externas caracterizan el comportamiento, no certifican por sí solas mantenibilidad, rendimiento o seguridad integral. Los 29 casos iniciales se ejecutaron con `python -m unittest discover -s tests -v`; el registro auténtico está en `evidencias/pruebas/01_inicial.txt`.
-
-## 4.3 Ubicaciones comprobables
+## 5.2 Ubicaciones comprobables
 
 ### CS01 - versiones/inicial/sistema.py:31
 
@@ -140,7 +155,7 @@ Las pruebas externas caracterizan el comportamiento, no certifican por sí solas
             if d.get("tipo") not in ("certificado", "equivalencia", "inscripcion"):
 ```
 
-# 5. SOLID, Clean Code y decisiones
+# 6. SOLID, Clean Code y decisiones
 
 
 
@@ -171,7 +186,7 @@ Clean Code se aplica mediante nombres descriptivos, validación reutilizable, m�
 
 Un estudiante puede tener varias solicitudes. Una solicitud tiene exactamente un estudiante y cero o un responsable. Un responsable puede atender varias solicitudes. La prioridad y el tipo clasifican; el estado representa el avance. La consola llama al servicio; éste utiliza reglas de dominio y el repositorio; únicamente el repositorio conoce SQL.
 
-# 6. Refactoring seguro
+# 7. Refactoring seguro
 
 
 
@@ -342,7 +357,7 @@ def validar_transicion(actual, destino):
         raise ValueError("Transición inválida")
 ```
 
-## 6.5 Indicadores estructurales
+## 7.5 Indicadores estructurales
 
 | Versión | Líneas de operar | Funciones en sistema.py |
 |---|---|---|
@@ -351,7 +366,7 @@ def validar_transicion(actual, destino):
 
 Se contaron líneas físicas del nodo AST y funciones declaradas. El número total de funciones puede aumentar al extraer responsabilidades. Estos datos no prueban una mejora de rendimiento ni constituyen una métrica de calidad por sí solos.
 
-# 7. Pruebas y verificación
+# 8. Pruebas y verificación
 
 
 
@@ -399,7 +414,7 @@ La versión final ejecutó 33 pruebas. La matriz de 16 pares cuenta como un mét
 
 Cada prueba de servicio abre SQLite en memoria y cierra la conexión. La persistencia se prueba con un archivo temporal reabierto. Las pruebas de consola usan procesos reales y bases temporales. No se usa una base de producción ni se limpian archivos del usuario. Los registros son salidas capturadas de los comandos ejecutados; no son capturas recreadas gráficamente.
 
-## 7.1 Registros de ejecución
+## 8.1 Registros de ejecución
 
 ### 01_inicial.txt
 
@@ -479,7 +494,7 @@ Ran 33 tests in 0.382s
 OK
 ```
 
-## 7.2 Demostración antes/después
+## 8.2 Demostración antes/después
 
 La ejecución de demo.py informó IGUALES para diez pasos. Ejemplos de resultados realmente capturados:
 
@@ -565,11 +580,11 @@ La ejecución de demo.py informó IGUALES para diez pasos. Ejemplos de resultado
 }
 ```
 
-# 8. Code review y criterios de aceptación
+# 9. Code review y criterios de aceptación
 
 ## Autorrevisión técnica asistida por IA
 
-Revisión del artefacto por el mismo asistente que lo generó, el 01/11/2026. No constituye revisión independiente ni aprobación de un compañero o docente. El estudiante debe realizar su propia revisión antes de entregar.
+Revisión del artefacto por el mismo asistente que lo generó, el 01/11/2026. No constituye revisión independiente ni aprobación de un compañero o docente. Con dos integrantes corresponde registrar antes de entregar una revisión cruzada real (cada uno revisa el aporte del otro en el repositorio) en docs/checklist_code_review.md; hasta entonces consta sólo la autorrevisión asistida.
 
 | Criterio | Resultado | Evidencia o límite |
 |---|---|---|
@@ -606,7 +621,7 @@ La suite compartida debe aprobar en el estado inicial y en cada refactoring. La 
 
 El resultado local no se presenta como una entrega académica completa mientras falten enlaces y video personal.
 
-# 9. Conclusiones y mejoras futuras
+# 10. Conclusiones y mejoras futuras
 
 El resultado más relevante es la separación entre reglas de aplicación y acceso a datos. Antes, el mismo método contenía validaciones, consultas y cambios de estado. Después, el servicio expresa las operaciones y el repositorio administra las consultas. La tabla de transiciones permite inspeccionar el ciclo sin reconstruir una expresión booleana extensa.
 
@@ -614,13 +629,19 @@ El proceso también mostró que una extracción superficial puede no resolver el
 
 No se afirma que el sistema esté libre de errores. La evidencia respalda el contrato cubierto. Quedan pendientes mensajes para errores técnicos, validación de email más estricta, búsqueda Unicode completa, autenticación y concurrencia. Esos cambios deberían planificarse como mejoras funcionales separadas y con pruebas propias.
 
-## Conclusión individual propuesta para Gevont Utmazian
+## Conclusión grupal
 
-Borrador para revisar tras estudiar y ejecutar el proyecto: «La comparación muestra que un programa puede dar resultados correctos y aun así ser difícil de mantener. Separar las reglas y el almacenamiento ayuda a ubicar los cambios, y las pruebas permiten comprobar que esa reorganización conserva el comportamiento esperado. El criterio principal no fue sumar funciones, sino poder justificar las mejoras con ejemplos y resultados.»
+Borrador para acordar entre los integrantes: «El trabajo mostró que un sistema puede cumplir su contrato externo y aun así concentrar demasiados motivos de cambio. Separar servicio, dominio y repositorio, y explicitar las transiciones de estado, hizo más localizable cada modificación; las pruebas compartidas entre ambas versiones permitieron controlar que el comportamiento observable se mantuviera. Los límites son los ya señalados: autorrevisión asistida, errores técnicos sin traducir y validaciones básicas.»
 
-Este párrafo no certifica un aprendizaje personal ya demostrado. El estudiante debe reemplazarlo o ampliarlo con su reflexión real. No se incluye una conclusión grupal ficticia porque el material está preparado para modalidad individual todavía por confirmar.
+## Conclusiones individuales
 
-# 10. Uso de inteligencia artificial
+**Gevont Utmazian.** Borrador para revisar tras estudiar y ejecutar el proyecto: «La comparación muestra que un programa puede dar resultados correctos y aun así ser difícil de mantener. Separar las reglas y el almacenamiento ayuda a ubicar los cambios, y las pruebas permiten comprobar que esa reorganización conserva el comportamiento esperado. El criterio principal no fue sumar funciones, sino poder justificar las mejoras con ejemplos y resultados.»
+
+**Martín Maine.** Borrador para revisar tras estudiar y ejecutar el proyecto: «Lo central fue distinguir entre que el programa funcione y que pueda modificarse sin riesgo. El diagnóstico con ubicación, impacto y prioridad permitió decidir qué corregir primero, y la comparación de diez pasos de consola entre las dos versiones dio una evidencia concreta de que el refactoring no cambió lo que ve el usuario.»
+
+Estos párrafos son borradores: cada integrante debe reemplazarlos o ampliarlos con su reflexión real. No certifican un aprendizaje ya demostrado.
+
+# 11. Uso de inteligencia artificial
 
 
 
@@ -638,11 +659,11 @@ Los puntos 3 a 5 son un resumen del proceso real, no prompts nuevos inventados n
 
 ## Responsabilidad y límites
 
-El material está preparado para revisión y estudio por Gevont Utmazian. No hay evidencia todavía de que el estudiante haya ejecutado personalmente el proyecto o comprendido todos los cambios. La conclusión individual y el guion son borradores para revisar, no constancias de aprendizaje ya demostrado. No se generó video ni voz artificial. No hubo revisión externa.
+El material está preparado para revisión y estudio por Gevont Utmazian y Martín Maine. No hay evidencia todavía de que los estudiantes hayan ejecutado personalmente el proyecto o comprendido todos los cambios. Las conclusiones y el guion son borradores para revisar, no constancias de aprendizaje ya demostrado. No se generó video ni voz artificial. No hubo revisión externa.
 
-La consigna admite IA como apoyo; el grado de generación aquí declarado es amplio y debe ser revisado por el estudiante según las condiciones de la cátedra. No se presume autorización académica adicional.
+La consigna admite IA como apoyo; el grado de generación aquí declarado es amplio y debe ser revisado por los estudiantes según las condiciones de la cátedra. No se presume autorización académica adicional.
 
-# 11. Referencias y recursos
+# 12. Referencias y recursos
 
 [R1] Python Software Foundation. Documentación de unittest, Python 3.10. Consulta: 01/11/2026. https://docs.python.org/3.10/library/unittest.html
 
@@ -656,15 +677,15 @@ Los términos Extract Method e Introduce Parameter Object se emplean según esas
 
 [C1] Cátedra de Metodología de Sistemas II. TP MS2V2.pdf, seis páginas, suministrado por el usuario. Fuente principal de requisitos.
 
-[C2] Material complementario suministrado como Markdown pegado(1).md. Incluye orientaciones de entrega y defensa. Se conserva como docs/material_catedra.md.
+[C2] Material complementario suministrado como Markdown pegado(1).md. Incluye orientaciones de entrega y defensa.
 
-Repositorio GitHub: PENDIENTE DE PUBLICACIÓN AUTORIZADA.
+Repositorio GitHub: [proyectofinal_met2](https://github.com/gevontutmazian8/proyectofinal_met2).
 
-Video personal: PENDIENTE DE GRABACIÓN Y ENLACE.
+Video grupal: PENDIENTE DE GRABACIÓN Y ENLACE (todos los integrantes con cámara encendida, rostro y nombre completo).
 
-Fecha de entrega y justificación individual: PENDIENTES DE CONFIRMACIÓN.
+Fecha de entrega: 08/11/2026. Participación de cada integrante: ver sección 2.1.
 
-# 12. Auditoría y cierre de entrega
+# 13. Auditoría y cierre de entrega
 
 ## Matriz de cumplimiento
 
@@ -674,7 +695,7 @@ Fecha de entrega y justificación individual: PENDIENTES DE CONFIRMACIÓN.
 | Tres entidades y cuatro operaciones | Cumplido | sistema inicial, cli.py | Tres tablas; ocho operaciones |
 | Persistencia | Cumplido | test_persistencia | Cierre y reapertura real |
 | Antes/después | Cumplido | versiones/inicial; demo_comparada.json | Diez pasos idénticos |
-| Ocho debilidades | Cumplido | docs/diagnostico.md; informe sección 4 | Ubicación, impacto, riesgo y prioridad |
+| Ocho debilidades | Cumplido | docs/diagnostico.md; informe secciones 4 y 5 | Ubicación, impacto, riesgo y prioridad |
 | SOLID y Clean Code | Cumplido | docs/principios_y_decisiones.md | Aplicación justificada y límites explícitos |
 | Cuatro refactorings | Cumplido | docs/refactorings.md; commits | Pruebas ejecutadas por cambio |
 | Pruebas y regresión | Cumplido | evidencias/pruebas | 33 pruebas finales; sin regresiones conocidas en casos cubiertos |
@@ -685,11 +706,11 @@ Fecha de entrega y justificación individual: PENDIENTES DE CONFIRMACIÓN.
 | README e historial | Cumplido | README.md; historial.bundle | Recuperable sin conexión |
 | Seis tags | Cumplido al empaquetar | historial.bundle y manifiesto_entrega.json | Se verifica contra Git antes del ZIP |
 | ZIP ejecutable | Cumplido al verificar extracción | manifiesto_entrega.json; validacion_paquete.txt | Pruebas desde copia descomprimida |
-| Material de defensa | Cumplido | defensa/guion_defensa.md y preguntas_docente.md | Guion para ensayo, no video |
-| Repositorio GitHub y enlace | Pendiente | docs/publicacion_y_pendientes.md | Autorizar y publicar; probar acceso |
-| Video y enlace | Pendiente | Guion preparado | Grabar con rostro y voz propios |
-| Justificación individual y fecha | Pendiente | Portada y pendientes | Confirmar datos reales con cátedra |
-| Comprensión personal | No verificable | Ejercicios de defensa propuestos | Estudiante debe estudiar y demostrar |
+| Capturas de pantalla | Pendiente | Sección 7 | Hay registros de ejecución. Falta incorporar las capturas de pantalla. |
+| Repositorio GitHub y enlace | Parcial | Sección de referencias | Repositorio creado. Falta subir y verificar el contenido. |
+| Video y enlace | Pendiente | Guion preparado | Grabar con todos los integrantes, rostro y voz propios |
+| Modalidad grupal y fecha | Cumplido | Portada y sección 2.1 | Fecha de entrega y tareas documentadas. |
+| Comprensión personal | No verificable | Ejercicios de defensa propuestos | Los estudiantes deben estudiar y demostrar |
 
 La rúbrica se cubre mediante diagnóstico (15%), deuda técnica (20%), principios (20%), refactoring (20%), pruebas (10%) y revisión (10%). Presentación/repositorio/defensa (5%) permanece parcial por los pendientes externos. No se asigna una calificación ni se promete aprobación. La entrega no está completa para la cátedra hasta incorporar todos los recursos requeridos.
 

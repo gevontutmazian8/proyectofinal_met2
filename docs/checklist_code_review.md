@@ -1,6 +1,6 @@
 # Autorrevisión técnica asistida por IA
 
-Revisión del artefacto por el mismo asistente que lo generó, el 01/11/2026. No constituye revisión independiente ni aprobación de un compañero o docente. El estudiante debe realizar su propia revisión antes de entregar.
+Revisión del artefacto por el mismo asistente que lo generó, el 01/11/2026. No constituye revisión independiente ni aprobación de un compañero o docente. Con dos integrantes corresponde registrar antes de entregar una revisión cruzada real (cada uno revisa el aporte del otro en el repositorio); hasta entonces consta sólo la autorrevisión asistida.
 
 | Criterio | Resultado | Evidencia o límite |
 |---|---|---|

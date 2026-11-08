@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+from datetime import date
 from pathlib import Path
 import subprocess
 import sys
@@ -73,7 +74,7 @@ def main():
             if comando(['git','rev-parse',tag],restaurado).strip() != commit:
                 raise RuntimeError('Tag no restaurado')
         comando(['git','fsck','--full'],restaurado)
-    evidencia = ('Validación de paquete extraído, 01/11/2026.\n'
+    evidencia = (f'Validación de paquete extraído, {date.today():%d/%m/%Y}.\n'
                  + pruebas + '\nDemostración: IGUALES, 10 pasos por versión.\n'
                  + 'Historial restaurado desde bundle: seis tags coincidentes; git fsck aprobado.\n'
                  + 'Archivos versionados comprobados mediante SHA-256.\n')

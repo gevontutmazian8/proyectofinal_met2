@@ -1,8 +1,8 @@
 # Sistema de Gestión de Solicitudes Académicas
 
-TPI de Metodología de Sistemas II. Gevont Utmazian, comisión M25 C4-08, 2026.
+TPI de Metodología de Sistemas II. Integrantes: Gevont Utmazian y Martín Maine. Comisión M25 C4-08, 2026.
 
-Prototipo académico creado expresamente para analizar calidad interna, diagnosticar ocho debilidades y refactorizar sin cambiar el contrato externo. La generación de código, pruebas y documentación contó con intervención sustancial de ChatGPT/Codex; ver `docs/registro_ia.md`. La comprensión y defensa del estudiante están pendientes de realizarse.
+Prototipo académico creado expresamente para analizar calidad interna, diagnosticar ocho debilidades y refactorizar sin cambiar el contrato externo. La generación de código, pruebas y documentación contó con intervención sustancial de ChatGPT/Codex; ver `docs/registro_ia.md`. La comprensión y defensa de los integrantes están pendientes de realizarse.
 
 ## Ejecutar desde cero
 
@@ -15,6 +15,18 @@ python demo.py
 ```
 
 La demostración crea bases temporales, ejecuta diez pasos en cada versión y compara exactamente JSON y códigos de salida. No modifica una base de trabajo existente.
+
+## Capturas para el informe
+
+Desde la carpeta del proyecto, ejecutá cada comando por separado:
+
+```powershell
+python -m herramientas.capturas inicial
+python -m herramientas.capturas final
+python -m unittest discover -s tests
+```
+
+Después de cada ejecución, usá **Win + Mayús + S** para capturar el comando y su salida. Guardá las imágenes como `01_inicial.png`, `02_final.png` y `03_pruebas.png` en `evidencias/capturas/`. Las primeras dos ejecuciones usan la misma demostración y datos ficticios sobre bases temporales.
 
 ## Uso de la consola
 
@@ -49,6 +61,7 @@ Los errores de validación producen JSON con `ok: false` y código de salida 1. 
 | docs | Diagnóstico, decisiones, revisión, IA y auditoría |
 | evidencias | Registros auténticos de pruebas y demostración |
 | informe | PDF y fuente Markdown editable |
+| presentacion | Presentación del TPI (PPTX y PDF) sobre el modelo de la cátedra |
 | defensa | Guion y preguntas para estudiar |
 
 La persistencia tiene tres tablas: estudiantes, responsables y solicitudes. Estado es un conjunto de valores del dominio, no una cuarta tabla. No hay autenticación, adjuntos, borrado ni concurrencia multiusuario. La búsqueda ignora mayúsculas ASCII; SQLite no garantiza equivalencia Unicode completa en `lower`. La validación de email es básica y se conserva para evitar cambios funcionales durante el refactoring.
@@ -72,7 +85,7 @@ git -C TPI_con_historial log --oneline --decorate
 git -C TPI_con_historial tag --list
 ```
 
-Los commits identifican al asistente como generador; no representan una historia de trabajo humano simulada. No se publicó en GitHub porque el prompt requiere autorización previa. Ver `docs/publicacion_y_pendientes.md`.
+El registro de intervención de IA está en `docs/registro_ia.md`. La participación de cada integrante figura en la sección 2.1 del informe.
 
 ## Informe editable
 
@@ -83,4 +96,4 @@ python -m pip install reportlab
 python herramientas/generar_informe.py
 ```
 
-La entrega académica sigue pendiente hasta confirmar modalidad individual y fecha, publicar el repositorio e incorporar sus enlaces, y grabar el video personal. El guion no reemplaza ese video.
+La sección 12 del informe contiene el enlace del repositorio y el campo del video de defensa.

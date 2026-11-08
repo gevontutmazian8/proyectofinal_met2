@@ -14,9 +14,9 @@ Fuente principal: TP MS2V2.pdf, seis páginas. Complementos: Markdown pegado(1).
 | Code review | Checklist aplicado y correcciones | Pendiente |
 | Informe único y anexo | PDF, fuente editable y ZIP | Pendiente |
 | Registro IA | Prompt completo y registro real | Pendiente |
-| GitHub accesible | Publicación autorizada por el estudiante | Pendiente externo |
+| GitHub accesible | Publicación autorizada por los estudiantes | Pendiente externo |
 | Video personal | Guion y demostración preparados | Pendiente externo |
-| Modalidad individual | Justificación y condición administrativa por confirmar | Pendiente externo |
+| Modalidad grupal (2 integrantes) | Contribución de cada integrante en la sección 2.1 del informe | Parcial: completar contribuciones |
 
 Se utiliza Python 3.10 o superior: el equipo dispone de Python 3.10.0. Es suficiente para dataclasses, sqlite3 y anotaciones utilizadas; no se necesita instalar otro intérprete. El prompt proponía 3.11, sin exigirlo.
 El prototipo se construye expresamente para esta actividad. Las limitaciones estructurales son didácticas y no proceden de un sistema en producción.

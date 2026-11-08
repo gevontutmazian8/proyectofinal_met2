@@ -5,3 +5,8 @@ __pycache__/
 *.db-journal
 entrega/
 tmp/
+defensa/
+presentacion/
+docs/consigna_oficial.pdf
+docs/material_catedra.md
+docs/publicacion_y_pendientes.md

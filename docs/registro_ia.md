@@ -14,6 +14,6 @@ Los puntos 3 a 5 son un resumen del proceso real, no prompts nuevos inventados n
 
 ## Responsabilidad y límites
 
-El material está preparado para revisión y estudio por Gevont Utmazian. No hay evidencia todavía de que el estudiante haya ejecutado personalmente el proyecto o comprendido todos los cambios. La conclusión individual y el guion son borradores para revisar, no constancias de aprendizaje ya demostrado. No se generó video ni voz artificial. No hubo revisión externa.
+El material está preparado para revisión y estudio por Gevont Utmazian y Martín Maine. No hay evidencia todavía de que los estudiantes hayan ejecutado personalmente el proyecto o comprendido todos los cambios. Las conclusiones y el guion son borradores para revisar, no constancias de aprendizaje ya demostrado. No se generó video ni voz artificial. No hubo revisión externa.
 
-La consigna admite IA como apoyo; el grado de generación aquí declarado es amplio y debe ser revisado por el estudiante según las condiciones de la cátedra. No se presume autorización académica adicional.
+La consigna admite IA como apoyo; el grado de generación aquí declarado es amplio y debe ser revisado por los estudiantes según las condiciones de la cátedra. No se presume autorización académica adicional.

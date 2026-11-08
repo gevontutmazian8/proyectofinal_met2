@@ -82,7 +82,7 @@ def pie(canvas, doc):
     canvas.line(MARGEN, 43, ANCHO - MARGEN, 43)
     canvas.setFont(NORMAL, 8)
     canvas.setFillColor(colors.HexColor('#526273'))
-    canvas.drawString(MARGEN, 30, 'Gevont Utmazian | M25 C4-08 | Metodología de Sistemas II')
+    canvas.drawString(MARGEN, 30, 'Gevont Utmazian y Martín Maine | M25 C4-08 | Metodología de Sistemas II')
     canvas.drawRightString(ANCHO - MARGEN, 30, str(doc.page))
     if doc.page > 2:
         canvas.drawString(MARGEN, ALTO - 30, 'Gestión de solicitudes académicas - Informe técnico')
@@ -141,7 +141,7 @@ def convertir(texto):
             continue
         if linea.startswith('# '):
             if salida:
-                salida.append(PageBreak() if linea.startswith(('# 3.', '# 4.', '# 7.', '# 8.', '# 9.', '# 10.', '# 11.', '# 12.', '# Anexo')) else CondPageBreak(190))
+                salida.append(PageBreak() if linea.startswith(('# 3.', '# 4.', '# 5.', '# 8.', '# 9.', '# 10.', '# 11.', '# 12.', '# 13.', '# Anexo')) else CondPageBreak(190))
             salida.append(Paragraph(inline(linea[2:]), styles['H1TPI']))
             i += 1
             continue
@@ -172,7 +172,7 @@ def main():
     destino = fuente.with_suffix('.pdf')
     documento = Informe(str(destino), pagesize=A4, leftMargin=MARGEN, rightMargin=MARGEN,
                         topMargin=52, bottomMargin=55, title='TPI - Metodología de Sistemas II',
-                        author='Gevont Utmazian - asistencia de ChatGPT/Codex declarada')
+                        author='Gevont Utmazian y Martín Maine - asistencia de ChatGPT/Codex declarada')
     marco = Frame(MARGEN, 55, UTIL, ALTO-107, leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
     documento.addPageTemplates(PageTemplate(id='Informe', frames=marco, onPage=pie))
     flujo = [Spacer(1,55), Paragraph('UNIVERSIDAD TECNOLÓGICA NACIONAL', styles['H2TPI']),
@@ -181,9 +181,9 @@ def main():
              Paragraph('Trabajo Práctico<br/>Integrador', styles['PortadaTPI']),
              Paragraph('Evolución profesional de un sistema existente: calidad, deuda técnica, refactoring y revisión técnica', styles['H2TPI']),
              Spacer(1,24), Paragraph('Sistema de Gestión de Solicitudes Académicas', styles['CuerpoTPI']),
-             Spacer(1,25), Paragraph('<b>Estudiante:</b> Gevont Utmazian<br/><b>Comisión:</b> M25 C4-08<br/><b>Año académico:</b> 2026', styles['CuerpoTPI']),
-             Paragraph('Elaboración: 01/11/2026. Fecha de entrega: por confirmar.', styles['PequenoTPI']),
-             Spacer(1,20), Paragraph('Versión técnica preparada para revisión. Pendientes externos: modalidad individual, publicación en GitHub y video personal. Uso sustancial de IA declarado.', styles['PequenoTPI']),
+             Spacer(1,25), Paragraph('<b>Integrantes:</b> Gevont Utmazian, Martín Maine<br/><b>Comisión:</b> M25 C4-08<br/><b>Año académico:</b> 2026', styles['CuerpoTPI']),
+             Paragraph('Fecha de entrega: 08/11/2026.', styles['PequenoTPI']),
+             Spacer(1,20), Paragraph('Informe técnico. El uso de IA se detalla en el apartado correspondiente.', styles['PequenoTPI']),
              PageBreak(), Paragraph('Índice', styles['H2TPI'])]
     indice = TableOfContents()
     indice.levelStyles = [ParagraphStyle('IndiceTPI',fontName=NORMAL,fontSize=11,leading=17,spaceBefore=6)]
