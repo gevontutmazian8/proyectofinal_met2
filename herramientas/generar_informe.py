@@ -7,11 +7,12 @@ from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     BaseDocTemplate, PageTemplate, Frame, Paragraph, Spacer, PageBreak,
-    Table, TableStyle, Preformatted, KeepTogether, CondPageBreak)
+    Table, TableStyle, Preformatted, KeepTogether, CondPageBreak, Image)
 from reportlab.platypus.tableofcontents import TableOfContents
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -89,7 +90,7 @@ def pie(canvas, doc):
     canvas.restoreState()
 
 
-def convertir(texto):
+def convertir(texto, directorio_fuente):
     lineas = texto.splitlines()
     salida = []
     i = 0
@@ -109,6 +110,18 @@ def convertir(texto):
                 i += 1
             codigo = Preformatted('\n'.join(bloque), styles['CodigoTPI'])
             salida.append(KeepTogether([codigo]) if len(bloque) <= 55 else codigo)
+            i += 1
+            continue
+        imagen = re.fullmatch(r'!\[([^\]]+)\]\(([^)]+)\)', linea)
+        if imagen:
+            pie_imagen, ruta = imagen.groups()
+            archivo = str(directorio_fuente / ruta)
+            ancho, alto = ImageReader(archivo).getSize()
+            escala = min(UTIL / ancho, 560 / alto)
+            captura = Image(archivo, width=ancho * escala, height=alto * escala)
+            salida.append(KeepTogether([
+                Paragraph(inline(pie_imagen), styles['PequenoTPI']), captura, Spacer(1, 10),
+            ]))
             i += 1
             continue
         if linea.startswith('|'):
@@ -146,6 +159,8 @@ def convertir(texto):
             i += 1
             continue
         if linea.startswith('## '):
+            if linea.startswith('## 8.3 Capturas'):
+                salida.append(CondPageBreak(460))
             salida.append(Paragraph(inline(linea[3:]), styles['H2TPI']))
             i += 1
             continue
@@ -159,7 +174,7 @@ def convertir(texto):
             continue
         parrafo = [linea]
         i += 1
-        while i < len(lineas) and lineas[i].strip() and not lineas[i].strip().startswith(('#', '|', '```', '- ', '* ')):
+        while i < len(lineas) and lineas[i].strip() and not lineas[i].strip().startswith(('#', '|', '```', '- ', '* ', '![')):
             parrafo.append(lineas[i].strip())
             i += 1
         contenido = '<br/>'.join(map(inline, parrafo)) if len(parrafo) == 6 and parrafo[0].startswith('Se construyó') else inline(' '.join(parrafo))
@@ -192,7 +207,7 @@ def main():
     texto = fuente.read_text(encoding='utf-8')
     if '--video' in sys.argv:  # python herramientas/generar_informe.py --video URL
         texto = texto.replace('ENLACE_AL_VIDEO (reemplazar por la URL real antes de regenerar el PDF)', sys.argv[sys.argv.index('--video') + 1])
-    flujo.extend(convertir(texto))
+    flujo.extend(convertir(texto, fuente.parent))
     documento.multiBuild(flujo)
     print(destino)
 

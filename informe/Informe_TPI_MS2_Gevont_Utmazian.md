@@ -580,6 +580,16 @@ La ejecución de demo.py informó IGUALES para diez pasos. Ejemplos de resultado
 }
 ```
 
+## 8.3 Capturas de la ejecución
+
+Las figuras 1 y 2 muestran el mismo escenario con datos de ejemplo. En ambas versiones se registra la solicitud, se consulta en estado resuelta, se rechaza el intento de volver a pendiente y se obtiene el mismo reporte. La figura 3 muestra el resultado de las 33 pruebas automatizadas.
+
+![Figura 1. Consola de la versión inicial (`py -m herramientas.capturas inicial`).](../evidencias/capturas/01_inicial.jpg)
+
+![Figura 2. Consola de la versión refactorizada (`py -m herramientas.capturas final`).](../evidencias/capturas/02_final.jpg)
+
+![Figura 3. Suite automatizada (`py -m unittest discover -s tests`).](../evidencias/capturas/03_pruebas.jpg)
+
 # 9. Code review y criterios de aceptación
 
 ## Checklist técnico aplicado
