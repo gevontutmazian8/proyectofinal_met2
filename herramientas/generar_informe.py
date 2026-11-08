@@ -168,6 +168,7 @@ def convertir(texto):
 
 
 def main():
+    import sys
     fuente = RAIZ / 'informe/Informe_TPI_MS2_Gevont_Utmazian.md'
     destino = fuente.with_suffix('.pdf')
     documento = Informe(str(destino), pagesize=A4, leftMargin=MARGEN, rightMargin=MARGEN,
@@ -188,7 +189,10 @@ def main():
     indice = TableOfContents()
     indice.levelStyles = [ParagraphStyle('IndiceTPI',fontName=NORMAL,fontSize=11,leading=17,spaceBefore=6)]
     flujo.extend([indice, PageBreak()])
-    flujo.extend(convertir(fuente.read_text(encoding='utf-8')))
+    texto = fuente.read_text(encoding='utf-8')
+    if '--video' in sys.argv:  # python herramientas/generar_informe.py --video URL
+        texto = texto.replace('ENLACE_AL_VIDEO (reemplazar por la URL real antes de regenerar el PDF)', sys.argv[sys.argv.index('--video') + 1])
+    flujo.extend(convertir(texto))
     documento.multiBuild(flujo)
     print(destino)
 

@@ -10,10 +10,8 @@ Herramienta: ChatGPT/Codex en Work Mode. Fecha conocida: 01/11/2026. Intervenci�
 4. Incidencia real: pytest no disponible; pip no pudo conectarse por restricciones de red. Se migró la suite a unittest y se ejecutó. No se conserva una captura de ese error; este registro es una descripción de la incidencia, no una transcripción literal de la consola.
 5. Validación: registros completos de las ejecuciones por hito en evidencias/pruebas; comparación de consolas en evidencias/demo_comparada.json; revisión final en checklist_code_review.md.
 
-Los puntos 3 a 5 son un resumen del proceso real, no prompts nuevos inventados ni una conversación reconstruida. Los diffs y commits permiten inspeccionar los cambios realizados. El anexo del informe incluye el prompt maestro y este registro. No se dispone de una exportación íntegra de todas las llamadas internas de herramientas; no se afirma que este archivo sea una transcripción completa de la sesión.
+Los puntos 3 a 5 resumen el proceso real; no son una transcripción completa de la sesión. Los diffs y commits permiten inspeccionar los cambios realizados.
 
 ## Responsabilidad y límites
 
-El material está preparado para revisión y estudio por Gevont Utmazian y Martín Maine. No hay evidencia todavía de que los estudiantes hayan ejecutado personalmente el proyecto o comprendido todos los cambios. Las conclusiones y el guion son borradores para revisar, no constancias de aprendizaje ya demostrado. No se generó video ni voz artificial. No hubo revisión externa.
-
-La consigna admite IA como apoyo; el grado de generación aquí declarado es amplio y debe ser revisado por los estudiantes según las condiciones de la cátedra. No se presume autorización académica adicional.
+La IA se usó como apoyo, con un grado de intervención amplio que se declara aquí. Gevont Utmazian y Martín Maine asumen la autoría del trabajo entregado y lo explican con voz propia en el video grupal. No se utilizó voz generada por IA.

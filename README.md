@@ -2,11 +2,11 @@
 
 TPI de Metodología de Sistemas II. Integrantes: Gevont Utmazian y Martín Maine. Comisión M25 C4-08, 2026.
 
-Prototipo académico creado expresamente para analizar calidad interna, diagnosticar ocho debilidades y refactorizar sin cambiar el contrato externo. La generación de código, pruebas y documentación contó con intervención sustancial de ChatGPT/Codex; ver `docs/registro_ia.md`. La comprensión y defensa de los integrantes están pendientes de realizarse.
+Prototipo académico creado expresamente para analizar calidad interna, diagnosticar ocho debilidades y refactorizar sin cambiar el contrato externo. La generación de código, pruebas y documentación contó con intervención sustancial de ChatGPT/Codex; ver `docs/registro_ia.md`. Los integrantes asumen la autoría del trabajo y lo defienden en el video grupal.
 
 ## Ejecutar desde cero
 
-Descomprimir el ZIP y abrir una terminal dentro de esta carpeta. Se requiere Python 3.10 o superior; fue probado con 3.10.0 en Windows. Para una instalación nueva usar una versión mantenida de Python compatible; no se necesita instalar paquetes para ejecutar el sistema ni las pruebas. SQLite, argparse, dataclasses y unittest están incluidos en Python.
+Clonar o descargar el repositorio y abrir una terminal dentro de la carpeta del proyecto. Se requiere Python 3.10 o superior; fue probado con 3.10.0 en Windows. Para una instalación nueva usar una versión mantenida de Python compatible; no se necesita instalar paquetes para ejecutar el sistema ni las pruebas. SQLite, argparse, dataclasses y unittest están incluidos en Python.
 
 ```powershell
 python --version
@@ -15,18 +15,6 @@ python demo.py
 ```
 
 La demostración crea bases temporales, ejecuta diez pasos en cada versión y compara exactamente JSON y códigos de salida. No modifica una base de trabajo existente.
-
-## Capturas para el informe
-
-Desde la carpeta del proyecto, ejecutá cada comando por separado:
-
-```powershell
-python -m herramientas.capturas inicial
-python -m herramientas.capturas final
-python -m unittest discover -s tests
-```
-
-Después de cada ejecución, usá **Win + Mayús + S** para capturar el comando y su salida. Guardá las imágenes como `01_inicial.png`, `02_final.png` y `03_pruebas.png` en `evidencias/capturas/`. Las primeras dos ejecuciones usan la misma demostración y datos ficticios sobre bases temporales.
 
 ## Uso de la consola
 
@@ -58,11 +46,10 @@ Los errores de validación producen JSON con `ok: false` y código de salida 1. 
 | repositorio.py | Esquema, SQL y transacciones |
 | versiones/inicial | Copia exacta del código base |
 | tests | 29 casos compartidos y 4 verificaciones de revisión |
-| docs | Diagnóstico, decisiones, revisión, IA y auditoría |
+| docs | Diagnóstico, decisiones, refactorings, pruebas, checklist de revisión y registro de IA |
 | evidencias | Registros auténticos de pruebas y demostración |
-| informe | PDF y fuente Markdown editable |
-| presentacion | Presentación del TPI (PPTX y PDF) sobre el modelo de la cátedra |
-| defensa | Guion y preguntas para estudiar |
+| informe | Informe técnico en PDF y fuente editable |
+| presentacion | Presentación editable en PowerPoint |
 
 La persistencia tiene tres tablas: estudiantes, responsables y solicitudes. Estado es un conjunto de valores del dominio, no una cuarta tabla. No hay autenticación, adjuntos, borrado ni concurrencia multiusuario. La búsqueda ignora mayúsculas ASCII; SQLite no garantiza equivalencia Unicode completa en `lower`. La validación de email es básica y se conserva para evitar cambios funcionales durante el refactoring.
 
@@ -77,23 +64,25 @@ La persistencia tiene tres tablas: estudiantes, responsables y solicitudes. Esta
 | etapa-docs | Informe y documentación |
 | estadorefactorizado | Estado final auditado |
 
-El ZIP contiene `historial.bundle`, que conserva todos los commits y tags sin depender de un enlace remoto. Para recuperar el repositorio completo, desde una carpeta distinta:
-
-```powershell
-git clone historial.bundle TPI_con_historial
-git -C TPI_con_historial log --oneline --decorate
-git -C TPI_con_historial tag --list
-```
+Los tags se publican junto con la rama principal (`git push origin --tags`) y permiten comparar `estado-inicial` con `estadorefactorizado`.
 
 El registro de intervención de IA está en `docs/registro_ia.md`. La participación de cada integrante figura en la sección 2.1 del informe.
 
-## Informe editable
+## Entregables y enlaces
 
-El PDF y la fuente están en `informe/`. Para regenerarlo se necesita ReportLab, solamente para documentación:
+| Entregable | Ubicación |
+|---|---|
+| Informe PDF | `informe/Informe_TPI_MS2_Gevont_Utmazian.pdf` |
+| Presentación (apoyo del video) | `presentacion/Presentacion_TPI_MS2.pptx` |
+| Checklist de code review | `docs/checklist_code_review.md` |
+| Evidencias de pruebas y demo | `evidencias/` |
+| Registro de uso de IA | `docs/registro_ia.md` |
+| Video grupal | Enlace pendiente de incorporar en el informe |
+
+Para regenerar el informe, instalá las dependencias de documentación y ejecutá el generador. Para empaquetar la versión registrada en Git, usá el comando de abajo. El ZIP queda en `Entrega_TPI_MS2`, junto a la carpeta del proyecto.
 
 ```powershell
-python -m pip install reportlab
+python -m pip install -r requirements-docs.txt
 python herramientas/generar_informe.py
+python herramientas/empaquetar.py
 ```
-
-La sección 12 del informe contiene el enlace del repositorio y el campo del video de defensa.

@@ -1,1 +1,0 @@
-# Ejecución y pruebas: biblioteca estándar de Python 3.10+

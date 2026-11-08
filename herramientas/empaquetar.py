@@ -10,7 +10,7 @@ import tempfile
 import zipfile
 
 RAIZ = Path(__file__).resolve().parents[1]
-SALIDA = RAIZ / 'entrega'
+SALIDA = RAIZ.parent / 'Entrega_TPI_MS2'
 TAGS = ['estado-inicial', 'etapa-diagnostico', 'etapa-refactoring',
         'etapa-pruebas', 'etapa-docs', 'estadorefactorizado']
 
